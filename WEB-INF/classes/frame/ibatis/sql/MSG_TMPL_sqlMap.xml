@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="MSG_TMPL">
+    <select id="getCount" parameterClass="java.util.Map" resultClass="int">
+		SELECT COUNT(*)
+		FROM MSG_TMPL A
+		LEFT OUTER JOIN COM_CODE D ON ( D.PCODE = 'A20' AND A.MSG_TP = D.CODE ) 
+
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+    </select>
+	
+    <select id="getListPage" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Msg_tmpl">
+		SELECT A.TMPL_ID, A.ADMIN_ID, A.TMPL_NM, A.MSG_TP, A.CONTENT, A.SORTS, A.USE_CNT, A.USE_YN, A.REG_DT, 
+		D.NAME AS MSG_TP_NM
+		FROM MSG_TMPL A
+		LEFT OUTER JOIN COM_CODE D ON ( D.PCODE = 'A20' AND A.MSG_TP = D.CODE ) 
+		
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY A.SORTS ASC 
+        LIMIT #START_NO#, #PAGE_CNT#
+        
+    </select>
+    
+    
+    <select id="getList" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Msg_tmpl">
+		SELECT A.TMPL_ID, A.ADMIN_ID, A.TMPL_NM, A.MSG_TP, A.CONTENT, A.SORTS, A.USE_CNT, A.USE_YN, A.REG_DT, 
+		D.NAME AS MSG_TP_NM
+		FROM MSG_TMPL A
+		LEFT OUTER JOIN COM_CODE D ON ( D.PCODE = 'A20' AND A.MSG_TP = D.CODE ) 
+
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY A.SORTS ASC 
+        
+    </select>
+    
+    <select id="getView" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Msg_tmpl">
+		SELECT A.TMPL_ID, A.ADMIN_ID, A.TMPL_NM, A.MSG_TP, A.CONTENT, A.SORTS, A.USE_CNT, A.USE_YN, A.REG_DT, 
+		D.NAME AS MSG_TP_NM
+		FROM MSG_TMPL A
+		LEFT OUTER JOIN COM_CODE D ON ( D.PCODE = 'A20' AND A.MSG_TP = D.CODE ) 
+		
+        WHERE A.TMPL_ID = #TMPL_ID# 
+    </select>
+            
+    <statement id="insert" parameterClass="java.util.Map" resultClass="int">
+		INSERT INTO MSG_TMPL(ADMIN_ID, TMPL_NM, MSG_TP, CONTENT, SORTS, USE_CNT, USE_YN, REG_DT) 
+		VALUES (#ADMIN_ID#, #TMPL_NM#, #MSG_TP#, #CONTENT#, #SORTS#, #USE_CNT#, #USE_YN#, NOW())
+    </statement> 
+    
+    <statement id="update" parameterClass="java.util.Map" resultClass="int">
+		UPDATE MSG_TMPL SET  
+			ADMIN_ID=#ADMIN_ID#, TMPL_NM=#TMPL_NM#, MSG_TP=#MSG_TP#, CONTENT=#CONTENT#, SORTS=#SORTS#, 
+			USE_CNT=#USE_CNT#, USE_YN=#USE_YN#
+		WHERE TMPL_ID = #TMPL_ID# 
+    </statement> 
+        
+    <statement id="delete" parameterClass="java.util.Map" resultClass="int">
+		DELETE FROM MSG_TMPL WHERE TMPL_ID = #TMPL_ID# 
+    </statement> 
+        
+</sqlMap>

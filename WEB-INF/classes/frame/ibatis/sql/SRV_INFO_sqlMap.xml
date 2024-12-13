@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SRV_INFO">
+	
+    <select id="getCount" parameterClass="java.util.Map" resultClass="int">
+        SELECT COUNT(*) FROM SRV_INFO A
+		LEFT OUTER JOIN SRV_MST C ON ( A.SRV_ID = C.SRV_ID ) 
+		LEFT OUTER JOIN COM_CODE B ON ( B.PCODE = 'A02' AND C.SRV_TP = B.CODE ) 
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+    </select>
+
+    <select id="getParmCount" parameterClass="java.util.Map" resultClass="int">
+        SELECT COUNT(*) FROM PARM_INFO A
+		WHERE SRV_SEQ = #SRV_SEQ# 
+    </select>
+    
+    <select id="getListPage" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Srv_info">
+		SELECT A.SRV_SEQ, A.SRV_ID, C.SRV_NM, C.SRV_DESC, C.SRV_TP, A.SRV_DETAIL, A.SRV_CALL, 
+		A.SRV_DUR, A.PRE_DUR, A.AFT_DUR, A.SORTS, A.REG_DT, A.MOD_DT, B.NAME AS SRV_TP_NM 
+		FROM SRV_INFO A
+		LEFT OUTER JOIN SRV_MST C ON ( A.SRV_ID = C.SRV_ID ) 
+		LEFT OUTER JOIN COM_CODE B ON ( B.PCODE = 'A02' AND C.SRV_TP = B.CODE ) 
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY A.SORTS 
+        LIMIT #START_NO#, #PAGE_CNT#
+    </select>
+    
+    <select id="getList" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Srv_info">
+		SELECT A.SRV_SEQ, A.SRV_ID, C.SRV_NM, C.SRV_DESC, C.SRV_TP, A.SRV_DETAIL, A.SRV_CALL, 
+		A.SRV_DUR, A.PRE_DUR, A.AFT_DUR, A.SORTS, A.REG_DT, A.MOD_DT, B.NAME AS SRV_TP_NM 
+		FROM SRV_INFO A
+		LEFT OUTER JOIN SRV_MST C ON ( A.SRV_ID = C.SRV_ID ) 
+		LEFT OUTER JOIN COM_CODE B ON ( B.PCODE = 'A02' AND C.SRV_TP = B.CODE ) 
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY A.SORTS   
+    </select>
+    
+    
+    
+    <select id="getView" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Srv_info">
+		SELECT A.SRV_SEQ, A.SRV_ID, C.SRV_NM, C.SRV_DESC, C.SRV_TP, A.SRV_DETAIL, A.SRV_CALL, 
+		A.SRV_DUR, A.PRE_DUR, A.AFT_DUR, A.SORTS, A.REG_DT, A.MOD_DT, B.NAME AS SRV_TP_NM 
+		FROM SRV_INFO A
+		LEFT OUTER JOIN SRV_MST C ON ( A.SRV_ID = C.SRV_ID ) 
+		LEFT OUTER JOIN COM_CODE B ON ( B.PCODE = 'A02' AND C.SRV_TP = B.CODE ) 
+		WHERE SRV_SEQ = #SRV_SEQ#
+    </select>
+            
+    
+    <statement id="insert" parameterClass="java.util.Map" resultClass="int">
+		INSERT INTO SRV_INFO(SRV_ID, SRV_DETAIL, SRV_CALL, SRV_DUR, PRE_DUR, AFT_DUR, SORTS, REG_DT ) 
+		VALUES (#SRV_ID#, #SRV_DETAIL#, #SRV_CALL#, #SRV_DUR#, #PRE_DUR#, #AFT_DUR#, #SORTS#, NOW() )
+    </statement> 
+    
+    <statement id="insertParmInfo" parameterClass="java.util.Map" resultClass="int">
+		INSERT INTO PARM_INFO(SRV_SEQ, PARM_ID, PARM_VAL, REG_DT  ) 
+		VALUES (#SRV_SEQ#, #PARM_ID#, #PARM_VAL#, NOW() )
+    </statement> 
+    
+    <statement id="update" parameterClass="java.util.Map" resultClass="int">
+		UPDATE SRV_INFO SET  
+			SRV_ID=#SRV_ID#, SRV_DETAIL=#SRV_DETAIL#, SRV_CALL=#SRV_CALL#, SRV_DUR=#SRV_DUR#, PRE_DUR=#PRE_DUR#, AFT_DUR=#AFT_DUR#, SORTS=#SORTS#, MOD_DT=NOW()  
+		WHERE SRV_SEQ = #SRV_SEQ#
+    </statement> 
+        
+    <statement id="delete" parameterClass="java.util.Map" resultClass="int">
+		DELETE FROM SRV_INFO WHERE SRV_SEQ = #SRV_SEQ#
+    </statement> 
+        <statement id="deleteParmInfo" parameterClass="java.util.Map" resultClass="int">
+		DELETE FROM PARM_INFO WHERE SRV_SEQ = #SRV_SEQ#
+    </statement> 
+    
+    
+</sqlMap>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig
+  PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+    <properties resource="config.properties" />
+
+    <settings useStatementNamespaces="true" cacheModelsEnabled="true"
+        enhancementEnabled="true" lazyLoadingEnabled="true" maxRequests="512"
+        maxSessions="128" maxTransactions="32" />
+
+	<transactionManager type="JDBC" commitRequired="false">
+      <dataSource type="JNDI">
+          <property name="DataSource" value="${datasource.jndiname}"/>
+      </dataSource> 
+	</transactionManager>
+
+    <!-- user sql schema list -->
+    <sqlMap resource="frame/ibatis/sql/USER_MST_sqlMap.xml" />
+    <sqlMap resource="frame/ibatis/sql/CLASS_MST_sqlMap.xml" />
+    <sqlMap resource="frame/ibatis/sql/CLASS_INFO_sqlMap.xml" />
+    <sqlMap resource="frame/ibatis/sql/COM_CODE_sqlMap.xml" />
+    <sqlMap resource="frame/ibatis/sql/ADMIN_MST_sqlMap.xml" />
+    <sqlMap resource="frame/ibatis/sql/ADMIN_MENU_sqlMap.xml" />
+    <sqlMap resource="frame/ibatis/sql/MSN_MST_sqlMap.xml" /> 
+    <sqlMap resource="frame/ibatis/sql/SRV_MST_sqlMap.xml" /> 
+    <sqlMap resource="frame/ibatis/sql/SRV_INFO_sqlMap.xml" /> 
+    <sqlMap resource="frame/ibatis/sql/PARM_MST_sqlMap.xml" /> 
+    <sqlMap resource="frame/ibatis/sql/PARM_INFO_sqlMap.xml" /> 
+    <sqlMap resource="frame/ibatis/sql/MSN_SRV_sqlMap.xml" /> 
+    <sqlMap resource="frame/ibatis/sql/CLASS_MSG_sqlMap.xml" />
+    <sqlMap resource="frame/ibatis/sql/MSG_TMPL_sqlMap.xml" />
+    <sqlMap resource="frame/ibatis/sql/BOARD_ANN_sqlMap.xml" />
+    <sqlMap resource="frame/ibatis/sql/FEEDBACK_MST_sqlMap.xml" />
+    <sqlMap resource="frame/ibatis/sql/FEEDBACK_RES_sqlMap.xml" />
+    <sqlMap resource="frame/ibatis/sql/DAILY_SALES_sqlMap.xml" />
+    <sqlMap resource="frame/ibatis/sql/BUY_HISTORY_sqlMap.xml" />
+    <sqlMap resource="frame/ibatis/sql/WORD_MST_sqlMap.xml" />
+    <sqlMap resource="frame/ibatis/sql/WORD_SEL_sqlMap.xml" />
+    <sqlMap resource="frame/ibatis/sql/WORD_SYNONYM_sqlMap.xml" />
+    <sqlMap resource="frame/ibatis/sql/WORD_SYNC_HIS_sqlMap.xml" />
+    <sqlMap resource="frame/ibatis/sql/SYNC_DATA_INFO_sqlMap.xml" />
+    
+</sqlMapConfig>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="BOARD_ANN">
+	
+    <select id="getCount" parameterClass="java.util.Map" resultClass="int">
+        SELECT COUNT(*) FROM BOARD_ANN A
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+    </select>
+
+    
+    <select id="getLastSeqNo" parameterClass="java.util.Map" resultClass="int">
+        SELECT MAX(SEQ_NO) FROM BOARD_ANN  
+        WHERE USER_ID > 0 
+    </select>
+    
+    <select id="getListPage" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Board_ann">
+		SELECT A.SEQ_NO, A.TITLE, A.CONTENT, A.DEL_YN, A.VALID_DT, A.IS_POPUP, 
+			A.GAME_TYPE, A.ANN_TYPE, A.USER_ID, A.REG_ID, A.REG_DT, A.MOD_DT, B.NAME AS ANN_TYPE_NM, C.USER_NIC 
+		FROM BOARD_ANN A
+		LEFT OUTER JOIN COM_CODE B ON ( B.PCODE = 'A12' AND B.CODE = A.ANN_TYPE )
+		LEFT OUTER JOIN USER_MST C ON ( A.USER_ID = C.USER_ID )
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY A.SEQ_NO DESC    
+        LIMIT #START_NO#, #PAGE_CNT#
+    </select>
+    
+    <select id="getList" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Board_ann">
+		SELECT A.SEQ_NO, A.TITLE, A.CONTENT, A.DEL_YN, A.VALID_DT, A.IS_POPUP, 
+			A.GAME_TYPE, A.ANN_TYPE, A.USER_ID, A.REG_ID, A.REG_DT, A.MOD_DT, B.NAME AS ANN_TYPE_NM, C.USER_NIC 
+		FROM BOARD_ANN A
+		LEFT OUTER JOIN COM_CODE B ON ( B.PCODE = 'A12' AND B.CODE = A.ANN_TYPE )
+		LEFT OUTER JOIN USER_MST C ON ( A.USER_ID = C.USER_ID )
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+    </select>
+    
+    
+    <select id="getView" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Board_ann">
+		SELECT A.SEQ_NO, A.TITLE, A.CONTENT, A.DEL_YN, A.VALID_DT, A.IS_POPUP, 
+			A.GAME_TYPE, A.ANN_TYPE, A.USER_ID, A.REG_ID, A.REG_DT, A.MOD_DT, B.NAME AS ANN_TYPE_NM, C.USER_NIC 
+		FROM BOARD_ANN A
+		LEFT OUTER JOIN COM_CODE B ON ( B.PCODE = 'A12' AND B.CODE = A.ANN_TYPE )
+		LEFT OUTER JOIN USER_MST C ON ( A.USER_ID = C.USER_ID )
+        WHERE SEQ_NO = #SEQ_NO#
+    </select>
+            
+    
+    <statement id="insert" parameterClass="java.util.Map" resultClass="int">
+		INSERT INTO BOARD_ANN( TITLE, CONTENT, DEL_YN, VALID_DT, IS_POPUP, 
+			GAME_TYPE, ANN_TYPE, USER_ID, REG_ID, REG_DT, MOD_DT  ) 
+		VALUES (#TITLE#, #CONTENT#, #DEL_YN#, #VALID_DT#,  #IS_POPUP#, 
+			#GAME_TYPE#, #ANN_TYPE#, #USER_ID#, #REG_ID#, NOW() , NOW() )
+    </statement> 
+    
+    <statement id="update" parameterClass="java.util.Map" resultClass="int">
+		UPDATE BOARD_ANN SET  
+			TITLE=#TITLE#, CONTENT=#CONTENT#,  DEL_YN=#DEL_YN#, VALID_DT=#VALID_DT#, IS_POPUP=#IS_POPUP#, 
+			GAME_TYPE=#GAME_TYPE#, ANN_TYPE=#ANN_TYPE#,  USER_ID=#USER_ID#, REG_ID=#REG_ID#, 
+			MOD_DT=NOW() 
+		WHERE SEQ_NO = #SEQ_NO# 
+    </statement> 
+        
+    <statement id="delete" parameterClass="java.util.Map" resultClass="int">
+		DELETE FROM BOARD_ANN WHERE SEQ_NO = #SEQ_NO# 
+    </statement> 
+    
+    
+</sqlMap>

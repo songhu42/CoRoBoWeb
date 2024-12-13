@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="USER_MST">
+	
+    <select id="getCount" parameterClass="java.util.Map" resultClass="int">
+		SELECT COUNT(*)
+		FROM USER_MST C 
+		LEFT OUTER JOIN COM_CODE D ON ( D.PCODE = 'A16' AND C.USER_GRADE = D.CODE )
+		LEFT OUTER JOIN COM_CODE E ON ( E.PCODE = 'A02' AND C.STATE = E.CODE )
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+    </select>
+	
+    <select id="getListPage" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.User_mst">
+		SELECT C.USER_ID, C.ADMIN_ID, C.USER_NM, C.USER_NIC, C.USER_GRADE, C.USER_LVL,  
+		C.TEL_NO, C.ADD_TEL, C.EMAIL, C.IMAGE, C.JOIN_DT, C.LEAVE_DT, C.STATE, C.REG_DT, 
+		D.NAME AS USER_GRADE_NM, E.NAME AS STATE_NM 
+		FROM USER_MST C 
+		LEFT OUTER JOIN COM_CODE D ON ( D.PCODE = 'A16' AND C.USER_GRADE = D.CODE )
+		LEFT OUTER JOIN COM_CODE E ON ( E.PCODE = 'A02' AND C.STATE = E.CODE )
+
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY C.USER_ID ASC 
+        LIMIT #START_NO#, #PAGE_CNT#
+        
+    </select>
+    
+    
+    <select id="getList" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.User_mst">
+		SELECT C.USER_ID, C.ADMIN_ID, C.USER_NM, C.USER_NIC, C.USER_GRADE, C.USER_LVL,  
+		C.TEL_NO, C.ADD_TEL, C.EMAIL, C.IMAGE, C.JOIN_DT, C.LEAVE_DT, C.STATE, C.REG_DT, 
+		D.NAME AS USER_GRADE_NM, E.NAME AS STATE_NM 
+		FROM USER_MST C 
+		LEFT OUTER JOIN COM_CODE D ON ( D.PCODE = 'A16' AND C.USER_GRADE = D.CODE )
+		LEFT OUTER JOIN COM_CODE E ON ( E.PCODE = 'A02' AND C.STATE = E.CODE )
+
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY C.USER_ID ASC 
+        
+    </select>
+    
+    <select id="getView" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.User_mst">
+		SELECT C.USER_ID, C.ADMIN_ID, C.USER_NM, C.USER_NIC, C.USER_GRADE, C.USER_LVL,  
+		C.TEL_NO, C.ADD_TEL, C.EMAIL, C.IMAGE, C.JOIN_DT, C.LEAVE_DT, C.STATE, C.REG_DT, 
+		D.NAME AS USER_GRADE_NM, E.NAME AS STATE_NM 
+		FROM USER_MST C 
+		LEFT OUTER JOIN COM_CODE D ON ( D.PCODE = 'A16' AND C.USER_GRADE = D.CODE )
+		LEFT OUTER JOIN COM_CODE E ON ( E.PCODE = 'A02' AND C.STATE = E.CODE )
+		
+        WHERE C.USER_ID = #USER_ID# 
+    </select>
+            
+    <statement id="insert" parameterClass="java.util.Map" resultClass="int">
+		INSERT INTO USER_MST(ADMIN_ID, USER_NM, USER_NIC, USER_GRADE, USER_LVL, TEL_NO,  ADD_TEL, EMAIL, IMAGE, JOIN_DT, LEAVE_DT, STATE,  REG_DT) 
+		VALUES (#ADMIN_ID#, #USER_NM#, #USER_NIC#, #USER_GRADE#, #USER_LVL#, #TEL_NO#, #ADD_TEL#, #EMAIL#, #IMAGE#, #JOIN_DT#, #LEAVE_DT#, #STATE#, NOW())
+    </statement> 
+    
+    <statement id="update" parameterClass="java.util.Map" resultClass="int">
+		UPDATE USER_MST SET  
+			ADMIN_ID=#ADMIN_ID#, USER_NM=#USER_NM#, USER_NIC=#USER_NIC#, USER_GRADE=#USER_GRADE#, USER_LVL=#USER_LVL#, 
+			TEL_NO=#TEL_NO#, ADD_TEL=#ADD_TEL#, EMAIL=#EMAIL#, IMAGE=#IMAGE#, JOIN_DT=#JOIN_DT#, LEAVE_DT=#LEAVE_DT#, STATE=#STATE#
+		WHERE USER_ID = #USER_ID# 
+    </statement> 
+        
+    <statement id="delete" parameterClass="java.util.Map" resultClass="int">
+		DELETE FROM USER_MST WHERE USER_ID = #USER_ID# 
+    </statement> 
+        
+</sqlMap>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="ADMIN_MST">
+    <select id="getCount" parameterClass="java.util.Map" resultClass="int">
+        SELECT COUNT(ADMIN_ID) AS CNT FROM ADMIN_MST WHERE ADMIN_ID = #ADMIN_ID#
+    </select>
+
+    <select id="getList" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Admin_mst">
+		SELECT A.ADMIN_ID, A.ADMIN_NM, A.TEL_NO, A.EMAIL, A.AUTO_LOGIN, A.PASSWD, A.AUTH_LEVEL, A.REG_DT
+		FROM ADMIN_MST A 
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY A.ADMIN_ID
+    </select>
+    
+    <select id="getView" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Admin_mst">
+		SELECT A.ADMIN_ID, A.ADMIN_NM, A.TEL_NO, A.EMAIL, A.AUTO_LOGIN, A.PASSWD, A.AUTH_LEVEL, A.REG_DT
+		FROM ADMIN_MST A 
+        WHERE A.ADMIN_ID = #ADMIN_ID#
+    </select>
+            
+    <statement id="updatePasswd" parameterClass="java.util.Map" resultClass="int">
+		UPDATE ADMIN_MST SET  
+			PASSWD=#PASSWD# 
+		WHERE ADMIN_ID = #ADMIN_ID# 
+    </statement> 
+        
+    <statement id="insert" parameterClass="java.util.Map" resultClass="int">
+		INSERT INTO ADMIN_MST(ADMIN_ID, ADMIN_NM, TEL_NO, EMAIL, AUTO_LOGIN, PASSWD, AUTH_LEVEL,  REG_DT) 
+		VALUES (#ADMIN_ID#, #ADMIN_NM#, #TEL_NO#, #EMAIL#, #AUTO_LOGIN#, #PASSWD#, #AUTH_LEVEL#, NOW())
+    </statement> 
+    
+    <statement id="update" parameterClass="java.util.Map" resultClass="int">
+		UPDATE ADMIN_MST SET  
+			ADMIN_NM=#ADMIN_NM#, TEL_NO=#TEL_NO#, EMAIL=#EMAIL#, AUTO_LOGIN=#AUTO_LOGIN#, PASSWD=#PASSWD#, AUTH_LEVEL=#AUTH_LEVEL#
+		WHERE ADMIN_ID = #ADMIN_ID# 
+    </statement> 
+        
+    <statement id="delete" parameterClass="java.util.Map" resultClass="int">
+		DELETE FROM ADMIN_MST WHERE ADMIN_ID = #ADMIN_ID# 
+    </statement> 
+    
+    <statement id="updPassword" parameterClass="java.util.Map" resultClass="int">
+		UPDATE ADMIN_MST SET PASSWD = #PASSWD# WHERE ADMIN_ID = #ADMIN_ID#
+    </statement>
+    
+    <select id="getAutoLoginKey" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.User_cookie">
+        SELECT ADMIN_ID , AUTO_LOGIN_KEY, REMOTE_ADDR
+		FROM ADMIN_COOKIE
+		WHERE ADMIN_ID = #ADMIN_ID# 
+    </select>
+    
+    <statement id="insertAutoLoginKey" parameterClass="java.util.Map" resultClass="int">
+		INSERT ADMIN_COOKIE(ADMIN_ID, AUTO_LOGIN_KEY, REMOTE_ADDR, REG_DT) 
+		VALUES (#ADMIN_ID#, #AUTO_LOGIN_KEY#, #REMOTE_ADDR#, NOW())
+    </statement> 
+    
+    <select id="getPassword" parameterClass="java.util.Map" resultClass="java.util.HashMap">
+        SELECT PASSWD AS PASSWORD FROM ADMIN_MST WHERE ADMIN_ID = #ADMIN_ID#
+    </select>
+    
+       
+</sqlMap>

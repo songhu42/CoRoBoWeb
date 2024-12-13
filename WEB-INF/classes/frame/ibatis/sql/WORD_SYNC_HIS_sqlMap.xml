@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="WORD_SYNC_HIS">
+	
+    <select id="getCount" parameterClass="java.util.Map" resultClass="int">
+        SELECT COUNT(*) FROM WORD_SYNC_HIS A
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+    </select>
+
+    <select id="getListPage" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Word_sync_his">
+		SELECT A.SEQ_NO, A.SQL_STR, A.EXE_YN, A.DB_VER, A.REG_DT  
+		FROM WORD_SYNC_HIS A
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY A.SEQ_NO     
+        LIMIT #START_NO#, #PAGE_CNT#
+    </select>
+    
+    <select id="getList" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Word_sync_his">
+		SELECT A.SEQ_NO, A.SQL_STR, A.EXE_YN, A.DB_VER, A.REG_DT  
+		FROM WORD_SYNC_HIS A
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+    </select>
+    
+    
+    <select id="getView" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Word_sync_his">
+		SELECT A.SEQ_NO, A.SQL_STR, A.EXE_YN, A.DB_VER, A.REG_DT  
+		FROM WORD_SYNC_HIS A
+        WHERE A.SEQ_NO = #SEQ_NO#
+    </select>
+            
+    
+    <statement id="insert" parameterClass="java.util.Map" resultClass="int">
+		INSERT INTO WORD_SYNC_HIS( SQL_STR, EXE_YN, DB_VER, REG_DT  ) 
+		VALUES ( #SQL_STR#, #EXE_YN#, #DB_VER#, NOW() )
+    </statement> 
+    
+    <statement id="update" parameterClass="java.util.Map" resultClass="int">
+		UPDATE WORD_SYNC_HIS SET  
+			SQL_STR=#SQL_STR#, EXE_YN=#EXE_YN#,  DB_VER=#DB_VER# 
+		WHERE SEQ_NO = #SEQ_NO# 
+    </statement> 
+        
+    <statement id="delete" parameterClass="java.util.Map" resultClass="int">
+		DELETE FROM WORD_SYNC_HIS WHERE SEQ_NO = #SEQ_NO# 
+    </statement> 
+    
+    
+</sqlMap>

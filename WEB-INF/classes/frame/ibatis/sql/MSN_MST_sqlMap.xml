@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="MSN_MST">
+	
+    <select id="getCount" parameterClass="java.util.Map" resultClass="int">
+        SELECT COUNT(*) FROM MSN_MST A
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+    </select>
+
+    <select id="getListPage" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Msn_mst">
+		SELECT A.MSN_ID, A.MSN_NM, A.MSN_DESC, A.MSN_TP, A.ROBO_CNT, A.ROBO_MAIN, A.ROBO_SUB1, 
+			A.ROBO_SUB2, A.ROBO_SUB3, A.ROBO_SUB4, A.SORTS, A.REG_DT, A.MOD_DT 
+		FROM MSN_MST A
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY A.SORTS 
+        LIMIT #START_NO#, #PAGE_CNT#
+    </select>
+    
+    <select id="getList" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Msn_mst">
+		SELECT A.MSN_ID, A.MSN_NM, A.MSN_DESC, A.MSN_TP, A.ROBO_CNT, A.ROBO_MAIN, A.ROBO_SUB1, 
+			A.ROBO_SUB2, A.ROBO_SUB3, A.ROBO_SUB4, A.SORTS, A.REG_DT, A.MOD_DT 
+		FROM MSN_MST A 
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY A.SORTS   
+    </select>
+    
+    
+    
+    <select id="getView" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Msn_mst">
+		SELECT A.MSN_ID, A.MSN_NM, A.MSN_DESC, A.MSN_TP, A.ROBO_CNT, A.ROBO_MAIN, A.ROBO_SUB1, 
+			A.ROBO_SUB2, A.ROBO_SUB3, A.ROBO_SUB4, A.SORTS, A.REG_DT, A.MOD_DT 
+		FROM MSN_MST A
+		WHERE MSN_ID = #MSN_ID#
+    </select>
+            
+    
+    <statement id="insert" parameterClass="java.util.Map" resultClass="int">
+		INSERT INTO MSN_MST( MSN_NM, MSN_DESC, MSN_TP, ROBO_CNT, ROBO_MAIN, 
+			ROBO_SUB1, ROBO_SUB2, ROBO_SUB3, ROBO_SUB4, SORTS, REG_DT  ) 
+		VALUES (#MSN_NM#, #MSN_DESC#, #MSN_TP#, #ROBO_CNT#, #ROBO_MAIN#, 
+			#ROBO_SUB1#, #ROBO_SUB2#, #ROBO_SUB3#, #ROBO_SUB4#, #SORTS#, NOW() )
+    </statement> 
+    
+    <statement id="update" parameterClass="java.util.Map" resultClass="int">
+		UPDATE MSN_MST SET  
+			MSN_NM=#MSN_NM#, MSN_DESC=#MSN_DESC#,  MSN_TP=#MSN_TP#, ROBO_CNT=#ROBO_CNT#, 
+			ROBO_MAIN=#ROBO_MAIN#, ROBO_SUB1=#ROBO_SUB1#,  ROBO_SUB2=#ROBO_SUB2#, ROBO_SUB3=#ROBO_SUB3#, 
+			ROBO_SUB4=#ROBO_SUB4#, SORTS=#SORTS#, MOD_DT=NOW()  
+		WHERE MSN_ID = #MSN_ID# 
+    </statement> 
+        
+    <statement id="delete" parameterClass="java.util.Map" resultClass="int">
+		DELETE FROM MSN_MST WHERE MSN_ID = #MSN_ID# 
+    </statement> 
+    
+    
+</sqlMap>

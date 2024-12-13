@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="BUY_HISTORY">
+	
+    <select id="getCount" parameterClass="java.util.Map" resultClass="int">
+		SELECT COUNT(*)
+		FROM BUY_HISTORY A  
+		INNER JOIN USER_MST C ON ( A.USER_ID = C.USER_ID ) 
+		LEFT OUTER JOIN COM_CODE D ON ( D.PCODE = 'A03' AND C.USER_AGE = D.CODE )
+		LEFT OUTER JOIN INAPP_ITEM E ON ( C.LOGIN_TYPE = E.APP_GB AND C.DEVICE_TOKEN = E.OS_GB AND A.ITEM_ID = E.ITEM_ID )  
+		
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+    </select>
+
+    
+    <select id="getSum" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Buy_history">
+		SELECT COUNT(*) AS BUY_CNT, IFNULL(SUM(E.PRICE),0) AS BUY_TOT_AMT 
+		FROM BUY_HISTORY A  
+		INNER JOIN USER_MST C ON ( A.USER_ID = C.USER_ID ) 
+		LEFT OUTER JOIN COM_CODE D ON ( D.PCODE = 'A03' AND C.USER_AGE = D.CODE )
+		LEFT OUTER JOIN INAPP_ITEM E ON ( C.LOGIN_TYPE = E.APP_GB AND C.DEVICE_TOKEN = E.OS_GB AND A.ITEM_ID = E.ITEM_ID )  
+		
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        
+    </select>
+    
+       
+    
+    <select id="getListPage" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Buy_history">
+		SELECT A.USER_ID, A.ITEM_ID, A.SEQ_NO, A.ADD_HEART, A.ADD_MAX_HEART, A.REG_DT, A.RECEIPT_ID, 
+		C.USER_NIC, C.STAGE, C.USER_GRADE, C.USER_LVL, C.USER_GOLD, C.USER_EXP, C.WP_ITEM, C.LOGIN_TYPE, C.DEVICE_TOKEN, 
+		C.JOIN_DT, C.MAX_HEART_CNT, C.HEART_CNT, C.USER_AGE, D.NAME AS USER_AGE_NM,  
+		E.ITEM_ID AS ITEM_NM, E.PRICE AS ITEM_PRICE 
+		FROM BUY_HISTORY A  
+		INNER JOIN USER_MST C ON ( A.USER_ID = C.USER_ID ) 
+		LEFT OUTER JOIN COM_CODE D ON ( D.PCODE = 'A03' AND C.USER_AGE = D.CODE )
+		LEFT OUTER JOIN INAPP_ITEM E ON ( C.LOGIN_TYPE = E.APP_GB AND C.DEVICE_TOKEN = E.OS_GB AND A.ITEM_ID = E.ITEM_ID )  
+		
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY A.REG_DT DESC 
+        LIMIT #START_NO#, #PAGE_CNT#
+        
+    </select>
+    
+    
+    <select id="getList" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Buy_history">
+		SELECT A.USER_ID, A.ITEM_ID, A.SEQ_NO, A.ADD_HEART, A.ADD_MAX_HEART, A.REG_DT, A.RECEIPT_ID, 
+		C.USER_NIC, C.STAGE, C.USER_GRADE, C.USER_LVL, C.USER_GOLD, C.USER_EXP, C.WP_ITEM, C.LOGIN_TYPE, C.DEVICE_TOKEN, 
+		C.JOIN_DT, C.MAX_HEART_CNT, C.HEART_CNT, C.USER_AGE, D.NAME AS USER_AGE_NM,  
+		E.ITEM_ID AS ITEM_NM, E.PRICE AS ITEM_PRICE 
+		FROM BUY_HISTORY A  
+		INNER JOIN USER_MST C ON ( A.USER_ID = C.USER_ID ) 
+		LEFT OUTER JOIN COM_CODE D ON ( D.PCODE = 'A03' AND C.USER_AGE = D.CODE )
+		LEFT OUTER JOIN INAPP_ITEM E ON ( C.LOGIN_TYPE = E.APP_GB AND C.DEVICE_TOKEN = E.OS_GB AND A.ITEM_ID = E.ITEM_ID )  
+
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY A.REG_DT DESC 
+        
+    </select>
+    
+    <select id="getView" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Buy_history">
+		SELECT A.USER_ID, A.ITEM_ID, A.SEQ_NO, A.ADD_HEART, A.ADD_MAX_HEART, A.REG_DT, A.RECEIPT_ID, 
+		C.USER_NIC, C.STAGE, C.USER_GRADE, C.USER_LVL, C.USER_GOLD, C.USER_EXP, C.WP_ITEM, C.LOGIN_TYPE, C.DEVICE_TOKEN, 
+		C.JOIN_DT, C.MAX_HEART_CNT, C.HEART_CNT, C.USER_AGE, D.NAME AS USER_AGE_NM,  
+		E.ITEM_ID AS ITEM_NM, E.PRICE AS ITEM_PRICE 
+		FROM BUY_HISTORY A  
+		INNER JOIN USER_MST C ON ( A.USER_ID = C.USER_ID ) 
+		LEFT OUTER JOIN COM_CODE D ON ( D.PCODE = 'A03' AND C.USER_AGE = D.CODE )
+		LEFT OUTER JOIN INAPP_ITEM E ON ( C.LOGIN_TYPE = E.APP_GB AND C.DEVICE_TOKEN = E.OS_GB AND A.ITEM_ID = E.ITEM_ID )  
+		
+        WHERE A.USER_ID = #USER_ID# AND A.ITEM_ID = #ITEM_ID# AND A.SEQ_NO = #SEQ_NO#  
+    </select>
+        
+    
+</sqlMap>

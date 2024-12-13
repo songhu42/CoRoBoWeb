@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="COM_CODE">
+    
+    <select id="selectWordMstList" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Word_mst">
+        SELECT WORD_ID, ENG, KOR, SOUND_URL 
+        FROM WORD_MST  
+        $WHERE_OPTION$  
+        ORDER BY WORD_ID  
+    </select>
+
+    <select id="selectGroupList" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Com_code">
+        SELECT CODE AS GROUP_ID, CODE AS CODE_ID, NAME AS GROUP_NM, NAME AS CODE_NM, '' AS REMRK, SORTS  
+        FROM COM_CODE 
+        WHERE PCODE = 'A'  
+        GROUP BY PCODE, NAME, SORTS
+        ORDER BY SORTS 
+    </select>
+    
+        
+    <select id="getCodeName" parameterClass="java.util.Map" resultClass="String">
+        SELECT NAME AS CODE_NM  
+        FROM COM_CODE 
+        WHERE PCODE = #GROUP_ID# AND CODE = #CODE_ID#
+    </select>
+    
+    
+    <select id="selectList" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Com_code">
+        SELECT PCODE AS GROUP_ID, CODE AS CODE_ID, '' AS GROUP_NM, NAME AS CODE_NM, REMRK, SORTS  
+        FROM COM_CODE 
+        WHERE PCODE = #GROUP_ID#  ORDER BY SORTS
+    </select>
+    
+
+    <select id="selectView" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Com_code">
+        SELECT PCODE AS GROUP_ID, CODE AS CODE_ID, '' AS GROUP_NM, NAME AS CODE_NM, REMRK, SORTS  
+        FROM COM_CODE 
+        WHERE PCODE = #GROUP_ID# AND CODE = #CODE_ID#
+    </select>    
+    
+    <select id="selectListWhere" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Com_code">
+        SELECT PCODE AS GROUP_ID, CODE AS CODE_ID, '' AS GROUP_NM, NAME AS CODE_NM, REMRK, SORTS  
+        FROM COM_CODE 
+        WHERE PCODE = #GROUP_ID#
+        $WHERE_OPTION$  
+        ORDER BY SORTS
+    </select>
+    
+    <statement id="insert" parameterClass="java.util.Map" resultClass="int">
+		INSERT INTO COM_CODE( GROUP_ID, GROUP_NM, CODE_ID, CODE_NM, SORTS, REMRK, REG_DT  ) 
+		VALUES (#GROUP_ID#, #GROUP_NM#, #CODE_ID#, #CODE_NM#, #SORTS#, #REMRK#, NOW())
+    </statement> 
+    
+    <statement id="update" parameterClass="java.util.Map" resultClass="int">
+		UPDATE COM_CODE SET 
+		CODE_NM = #CODE_NM# , SORTS = #SORTS# , REMRK = #REMRK#
+		WHERE GROUP_ID = #GROUP_ID# AND CODE_ID = #CODE_ID#
+    </statement> 
+    
+    <statement id="delete" parameterClass="java.util.Map" resultClass="int">
+		DELETE FROM COM_CODE WHERE GROUP_ID = #GROUP_ID# AND CODE_ID = #CODE_ID#
+    </statement> 
+    
+    <statement id="deleteAllAddCode" parameterClass="java.util.Map" resultClass="int">
+		DELETE FROM COM_CODE WHERE REMRK = #REMRK# 
+    </statement> 
+    
+    
+</sqlMap>

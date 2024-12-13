@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="WORD_SEL">
+	
+    <select id="getCount" parameterClass="java.util.Map" resultClass="int">
+        SELECT COUNT(*) FROM WORD_SEL A
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+    </select>
+
+    <select id="getListPage" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Word_sel">
+		SELECT A.WORD_ID, A.SEQ_NO, A.ENG, A.KOR, A.TYPE 
+		FROM WORD_SEL A
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY A.WORD_ID, A.SEQ_NO     
+        LIMIT #START_NO#, #PAGE_CNT#
+    </select>
+    
+    <select id="getList" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Word_sel">
+		SELECT A.WORD_ID, A.SEQ_NO, A.ENG, A.KOR, A.TYPE 
+		FROM WORD_SEL A
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+    </select>
+    
+    
+    <select id="getView" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Word_sel">
+		SELECT A.WORD_ID, A.SEQ_NO, A.ENG, A.KOR, A.TYPE 
+		FROM WORD_SEL A
+        WHERE A.WORD_ID = #WORD_ID# AND A.SEQ_NO = #SEQ_NO#
+    </select>
+            
+    
+    <statement id="insert" parameterClass="java.util.Map" resultClass="int">
+		INSERT INTO WORD_SEL( WORD_ID, SEQ_NO, ENG, KOR, TYPE  ) 
+		VALUES (#WORD_ID#, #SEQ_NO#, #ENG#, #KOR#,  #TYPE# )
+    </statement> 
+    
+    <statement id="update" parameterClass="java.util.Map" resultClass="int">
+		UPDATE WORD_SEL SET  
+			ENG=#ENG#, KOR=#KOR#,  TYPE=#TYPE# 
+		WHERE WORD_ID = #WORD_ID# AND SEQ_NO = #SEQ_NO# 
+    </statement> 
+        
+    <statement id="delete" parameterClass="java.util.Map" resultClass="int">
+		DELETE FROM WORD_SEL WHERE WORD_ID = #WORD_ID# AND SEQ_NO = #SEQ_NO# 
+    </statement> 
+    
+    
+</sqlMap>

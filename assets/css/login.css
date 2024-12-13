@@ -1,0 +1,379 @@
+@charset "utf-8";
+
+.content div div p {
+	background-color:#ccc; 
+	height: 50px;
+	border: 1px solid #333; 
+	margin: 0px; 
+}
+
+
+
+#content {
+    margin:1em 0 1em 1em !important;
+    padding:0 0 0 0 !important;
+}
+
+.userAnswerTextArea {
+	overflow:visible !important;
+	cols:40 !important; 
+	
+}
+.userAnswerShow {
+	text-align:left !important;
+    font-size: 1.1em !important;
+    text-align:left; 
+}
+.corAnswerShow {
+	text-align:left !important;
+    font-size: 1.2em !important;
+    font-weight: bold;
+    text-align:left; 
+    color:#0f0;
+}
+.corAnswerHide {
+	display:none !important; 
+}
+
+.answerButtonShow {
+	
+}
+.answerButtonHide{
+	display:none !important; 
+}
+
+.quesDesc {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+
+.paperTitleGrid {
+    font-size: 1.0em;
+    font-weight: bold !important;
+    text-align:left; 
+}
+
+.quesLabelMath {
+    font-size: 1.4em !important;
+    font-weight: bold;
+    text-align:left; 
+    color:#00f;
+}
+
+.resultLabelMath {
+    font-size: 1.0em !important;
+    font-weight: bold !important;
+    text-align:left; 
+}
+
+.resultBar {
+    padding:4px 0 6px 0 !important;
+	float:left;
+    display:block;
+}
+
+.titleLabelMath {
+    font-size: 1.3em !important;
+    margin:14px 0 0 0 !important;
+    font-weight: bold !important;
+    text-align:left; 
+}
+
+.quesLabelStudy {
+    font-size: 1.3em !important;
+    margin:12px 0 0 0 !important;
+    text-align:left; 
+    color:#00f;
+}
+.ansLabelStudy {
+    font-size: 1.1em !important;
+    margin:0 0 0 0 !important;
+    text-align:left; 
+}
+
+.quesLabelMathStudy {
+    font-size: 1.2em !important;
+    margin:10px 0 0 0 !important;
+    text-align:left; 
+    color:#00f;
+}
+.quesCommentMathStudy {
+    font-size: 1.0em !important;
+    text-align:left; 
+}
+.corAnswerShowStudy {
+	text-align:left !important;
+    margin:6px 0 0 0 !important;
+    font-size: 1.1em !important;
+    text-align:left; 
+}
+
+
+.quesLabelT {
+    font-size: 1.6em !important;
+    font-weight: bold;
+    text-align:left; 
+    color:#00f;
+}
+.quesLabelF {
+    font-size: 1.6em !important;
+    font-weight: bold;
+    text-align:left; 
+    color:#f00;
+}
+
+.quesMeansT {
+    font-size: 0.6em !important;
+    font-weight: bold;
+    text-align:left; 
+    color:#000;
+}
+.quesMeansF {
+    font-size: 0.7em !important;
+    font-weight: bold;
+    text-align:left; 
+    color:#f00;
+}
+
+.timerLabel {
+    font-size: 3.0em !important;
+    font-weight: bold;
+    text-align:center; 
+    color:#f00;
+}
+
+.ui-content {
+    font-size: 1.0em !important;
+}
+#confirm_solo_message {
+    font-size: 1.0em !important;
+}
+
+#confirmSolo {
+	position:fixed;
+	top:30px;
+	left:50px;
+}
+
+#confirmWait {
+	position:fixed;
+	top:30px;
+	left:50px;
+}
+#popupExtDicUrl {
+	position:fixed;
+	top:0px;
+	left:0px;
+}
+
+#confirm_wait_message {
+    font-size: 1.0em !important;
+}
+
+.ansGridB {
+    margin:0 0 0 0 !important;
+}
+.ansGridSolo {
+    margin:0 0 0 0 !important;
+}
+
+.ansBlockA {
+    margin:0 0 0 0 !important;
+    padding:10px 0 6px 0 !important;
+}
+
+.ansBlockB {
+    margin:0 0 0 0 !important;
+    padding:10px 0 6px 0 !important;
+}
+
+.ansBlockC {
+    font-weight: bold;
+    margin:0 0 0 0 !important;
+    padding:10px 0 6px 0 !important;
+}
+
+.ansLabelTest {
+	font-size: 1.1em !important;
+    font-weight: bold;
+}
+
+.ansCorColorTest {
+    font-size: 1.4em !important;
+	color:#0f0 !important;
+    font-weight: bold  !important;
+}
+.ansMissColorTest {
+    font-size: 1.2em !important;
+	color:#f00 !important;
+    font-weight: bold  !important;
+}
+
+.ansLabel {
+    font-size: 0.9em !important;
+    font-weight: bold;
+}
+
+.ansCorColor {
+    font-size: 1.0em !important;
+	color:#0f0 !important;
+    font-weight: bold  !important;
+}
+.ansCorColorBig {
+    font-size: 3.0em !important;
+	color:#0f0 !important;
+    font-weight: bold  !important;
+}
+.ansMissColor {
+    font-size: 0.9em !important;
+	color:#f00 !important;
+    font-weight: bold  !important;
+}
+
+
+
+.editLable, .editValue2, .editLable2, .editValue2 {
+    margin:0 0 0 0 !important;
+}
+
+.landscape section {
+	background: #9efaa2; 
+	background-image: -moz-linear-gradient(top, #fff, #9efaa2); 
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff), color-stop(1, #9efaa2)); 
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffffff', EndColorStr='#9efaa2')"; 
+}
+
+.rowSelected td {
+    font-weight: bold !important;
+    background:#ff88fd !important;
+}
+
+
+#rounded-corner{font-family:"Lucida Sans Unicode", "Lucida Grande", Sans-Serif;font-size:12px;width:99%;text-align:left;border-collapse:collapse;margin:20px;}
+#rounded-corner thead th.rounded-company{background:#b9c9fe left -1px no-repeat;}
+#rounded-corner thead th.rounded-q4{background:#b9c9fe  right -1px no-repeat;}
+#rounded-corner th{font-weight:normal;font-size:13px;color:#039;background:#b9c9fe;padding:8px;}
+#rounded-corner td{background:#e8edff;border-top:1px solid #fff;color:#669;padding:4px;}
+#rounded-corner tfoot td.rounded-foot-left{background:#e8edff  left bottom no-repeat;}
+#rounded-corner tfoot td.rounded-foot-right{background:#e8edff  right bottom no-repeat;}
+#rounded-corner tbody tr:hover td{background:#d0dafd;}
+
+.control_btn {
+  width:24%; 
+}
+
+.more_info {
+  border-bottom: 1px dotted;
+  position: relative;
+}
+
+.more_info .title {
+  position: absolute;
+  top: 20px;
+  padding: 4px;
+  left: 0;
+  white-space: nowrap;
+  color: #CC66FF; 
+  background: #0B3B0B;
+}
+
+table.sortable th {
+	font-size:20px;
+	font-weight: bold;
+	text-decoration:none;
+	
+}
+.sortheader {
+	font-size:12px;
+	font-weight: bold;
+	text-decoration:none;
+	color:#263056; 
+}
+
+th:first-child {
+    -moz-border-radius: 6px 0 0 0;
+    -webkit-border-radius: 6px 0 0 0;
+    border-radius: 6px 0 0 0;
+}
+
+th:last-child {
+    -moz-border-radius: 0 6px 0 0;
+    -webkit-border-radius: 0 6px 0 0;
+    border-radius: 0 6px 0 0;
+}
+
+th:only-child{
+    -moz-border-radius: 6px 6px 0 0;
+    -webkit-border-radius: 6px 6px 0 0;
+    border-radius: 6px 6px 0 0;
+}
+
+
+#tooltip
+{
+	text-align: left;
+	color: #fff;
+	background: #111;
+	position: absolute;
+	z-index: 100;
+	padding: 10px;
+	font-size: 12px; 
+}
+
+#tooltip:after /* triangle decoration */
+{
+	width: 0;
+	height: 0;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-top: 10px solid #111;
+	content: '';
+	position: absolute;
+	left: 50%;
+	bottom: -10px;
+	margin-left: -10px;
+}
+
+#tooltip.top:after
+{
+	border-top-color: transparent;
+	border-bottom: 10px solid #111;
+	top: -20px;
+	bottom: auto;
+}
+
+#tooltip.left:after
+{
+	left: 10px;
+	margin: 0;
+}
+
+#tooltip.right:after
+{
+	right: 10px;
+	left: auto;
+	margin: 0;
+}
+
+/*
+  created by nhosw at i-swear.com
+                    2007. 11. 11
+  last modified     2007. 12. 24 ver 1.4
+  aquamsgBox - DHTML Message BOX JAVASCRIPT
+  주석을 삭제하지 않는 조건으로 사용을 허락합니다.
+*/
+div.aquamsgBoxbg { position: absolute; left: 0; top: 0; background: #E5E5E5; z-Index: 2000; }
+div#aquamsgBox { position: absolute; left: 40%; top: 40%; z-Index: 2001; }
+div#aquamsgBox div.aquamsgBox_t { background: url(../images/aquamsgBox/msgbox_t.gif) 0 0 no-repeat; width: 290px; height: 34px; }
+div#aquamsgBox div.aquamsgBox_t div.aquamsgBoxtitle { font: 12px Verdana,Tahoma; color: #18609C; font-weight: bold; float: left; margin-left: 15px; margin-top: 10px; cursor: move; }
+div#aquamsgBox div.aquamsgBox_t img.aquamsgBoxclose { float: right; margin-top: 10px; margin-right: 10px; cursor: pointer; }
+div#aquamsgBox div.aquamsgBox_ml { background: url(../images/aquamsgBox/msgbox_ml.gif) 0 0 no-repeat; }
+div#aquamsgBox div.aquamsgBox_ml div.aquamsgBox_mr { background: url(../images/aquamsgBox/msgbox_mr.gif) 100% 0 no-repeat; }
+div#aquamsgBox div.aquamsgBox_ml div.aquamsgBox_mr div.aquamsgBox_mm { background: url(../images/aquamsgBox/msgbox_mm.gif) 0 0 repeat-x; width: 264px; margin: 0 13px; }
+div#aquamsgBox div.aquamsgBox_ml div.aquamsgBox_mr div.aquamsgBox_mm img.aquamsgBoximg { float: left; } 
+div#aquamsgBox div.aquamsgBox_ml div.aquamsgBox_mr div.aquamsgBox_mm div.aquamsgBoxmsg { float: left; font: 12px Verdana, Tahoma; color: #333333; margin-left: 5px; margin-bottom: 10px; width: 220px; padding: 0; }
+div#aquamsgBox div.aquamsgBox_ml div.aquamsgBox_mr div.aquamsgBox_mm div.aquamsgBoxmsg a { color: #18609C; }
+div#aquamsgBox div.aquamsgBoxbtn { clear: left; text-align: center; margin: 0; margin-top: 15px; }
+div#aquamsgBox div.aquamsgBoxbtn input.aquamsgBoxbtnin { margin: 0 3px; background: url(../images/aquamsgBox/msgbox_btn.gif) no-repeat; border: 0; width: 60px; height: 21px; cursor: pointer; }
+div#aquamsgBox div.aquamsgBox_b { background: url(../images/aquamsgBox/msgbox_b.gif) 0 0 no-repeat; width: 290px; height: 15px; }

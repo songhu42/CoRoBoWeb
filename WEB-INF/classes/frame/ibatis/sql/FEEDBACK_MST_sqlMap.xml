@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="FEEDBACK_MST">
+	
+    <select id="getCount" parameterClass="java.util.Map" resultClass="int">
+        SELECT COUNT(*) FROM FEEDBACK_MST A
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+    </select>
+
+    
+    <select id="getLastSeqNo" parameterClass="java.util.Map" resultClass="int">
+        SELECT MAX(SEQ_NO) FROM FEEDBACK_MST  
+    </select>
+    
+    <select id="getListPage" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Feedback_mst">
+		SELECT A.SEQ_NO, A.TITLE, A.CONTENT, A.DEL_YN, A.VALID_DT, A.TARGET, A.CONT_LIMIT, A.HEART_CNT, A.DAMON_CNT, 
+			A.GAME_TYPE, A.REG_ID, A.REG_DT, A.MOD_DT 
+		FROM FEEDBACK_MST A
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY A.SEQ_NO DESC    
+        LIMIT #START_NO#, #PAGE_CNT#
+    </select>
+    
+    <select id="getList" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Feedback_mst">
+		SELECT A.SEQ_NO, A.TITLE, A.CONTENT, A.DEL_YN, A.VALID_DT, A.TARGET, A.CONT_LIMIT, A.HEART_CNT, A.DAMON_CNT, 
+			A.GAME_TYPE, A.REG_ID, A.REG_DT, A.MOD_DT 
+		FROM FEEDBACK_MST A
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+    </select>
+    
+    
+    <select id="getView" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Feedback_mst">
+		SELECT A.SEQ_NO, A.TITLE, A.CONTENT, A.DEL_YN, A.VALID_DT, A.TARGET, A.CONT_LIMIT, A.HEART_CNT, A.DAMON_CNT, 
+			A.GAME_TYPE, A.REG_ID, A.REG_DT, A.MOD_DT 
+		FROM FEEDBACK_MST A
+        WHERE SEQ_NO = #SEQ_NO#
+    </select>
+            
+    
+    <statement id="insert" parameterClass="java.util.Map" resultClass="int">
+		INSERT INTO FEEDBACK_MST( TITLE, CONTENT, DEL_YN, VALID_DT, TARGET, CONT_LIMIT, HEART_CNT, DAMON_CNT, 
+			GAME_TYPE, REG_ID, REG_DT, MOD_DT  ) 
+		VALUES (#TITLE#, #CONTENT#, #DEL_YN#, #VALID_DT#,  #TARGET#, #CONT_LIMIT#, #HEART_CNT#, #DAMON_CNT#, 
+			#GAME_TYPE#, #REG_ID#, NOW() , NOW() )
+    </statement> 
+    
+    <statement id="update" parameterClass="java.util.Map" resultClass="int">
+		UPDATE FEEDBACK_MST SET  
+			TITLE=#TITLE#, CONTENT=#CONTENT#,  DEL_YN=#DEL_YN#, VALID_DT=#VALID_DT#, TARGET=#TARGET#, 
+			CONT_LIMIT=#CONT_LIMIT#, HEART_CNT=#HEART_CNT#, DAMON_CNT=#DAMON_CNT#, 
+			GAME_TYPE=#GAME_TYPE#, REG_ID=#REG_ID#, MOD_DT=NOW() 
+		WHERE SEQ_NO = #SEQ_NO# 
+    </statement> 
+        
+    <statement id="delete" parameterClass="java.util.Map" resultClass="int">
+		DELETE FROM FEEDBACK_MST WHERE SEQ_NO = #SEQ_NO# 
+    </statement> 
+    
+    
+</sqlMap>

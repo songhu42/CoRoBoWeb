@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="WORD_MST">
+	
+    <select id="getCount" parameterClass="java.util.Map" resultClass="int">
+        SELECT COUNT(*) FROM WORD_MST A
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+    </select>
+
+    <select id="getListPage" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Word_mst">
+		SELECT A.WORD_ID, A.ENG, A.KOR
+		FROM WORD_MST A
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY A.WORD_ID 
+        LIMIT #START_NO#, #PAGE_CNT#
+    </select>
+    
+    <select id="getList" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Word_mst">
+		SELECT A.WORD_ID, A.ENG, A.KOR
+		FROM WORD_MST A
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+    </select>
+    
+    
+    <select id="getView" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Word_mst">
+		SELECT A.WORD_ID, A.ENG, A.KOR
+		FROM WORD_MST A
+        WHERE A.WORD_ID = #WORD_ID# 
+    </select>
+            
+        
+    <statement id="update" parameterClass="java.util.Map" resultClass="int">
+		UPDATE WORD_MST SET  
+			ENG=#ENG#, KOR=#KOR# 
+		WHERE WORD_ID = #WORD_ID#  
+    </statement> 
+        
+    <statement id="delete" parameterClass="java.util.Map" resultClass="int">
+		DELETE FROM WORD_MST WHERE WORD_ID = #WORD_ID#  
+    </statement> 
+    
+    
+</sqlMap>

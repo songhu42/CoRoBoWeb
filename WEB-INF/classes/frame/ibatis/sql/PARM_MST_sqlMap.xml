@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="PARM_MST">
+	
+    <select id="getCount" parameterClass="java.util.Map" resultClass="int">
+        SELECT COUNT(*) FROM PARM_MST A
+		LEFT OUTER JOIN COM_CODE B ON ( B.PCODE = 'A03' AND A.PARM_TP = B.CODE ) 
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+    </select>
+
+    <select id="getListPage" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Parm_mst">
+		SELECT A.SRV_ID, A.PARM_ID, A.PARM_DESC, A.PARM_TP, A.DEF_VAL, A.SORTS, A.REG_DT, A.MOD_DT, B.NAME AS PARM_TP_NM 
+		FROM PARM_MST A
+		LEFT OUTER JOIN COM_CODE B ON ( B.PCODE = 'A03' AND A.PARM_TP = B.CODE ) 
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY A.SORTS 
+        LIMIT #START_NO#, #PAGE_CNT#
+    </select>
+    
+    <select id="getList" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Parm_mst">
+		SELECT A.SRV_ID, A.PARM_ID, A.PARM_DESC, A.PARM_TP, A.DEF_VAL, A.SORTS, A.REG_DT, A.MOD_DT, B.NAME AS PARM_TP_NM 
+		FROM PARM_MST A
+		LEFT OUTER JOIN COM_CODE B ON ( B.PCODE = 'A03' AND A.PARM_TP = B.CODE ) 
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY A.SORTS   
+    </select>
+    
+    
+    
+    <select id="getView" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Parm_mst">
+		SELECT A.SRV_ID, A.PARM_ID, A.PARM_DESC, A.PARM_TP, A.DEF_VAL, A.SORTS, A.REG_DT, A.MOD_DT, B.NAME AS PARM_TP_NM 
+		FROM PARM_MST A
+		LEFT OUTER JOIN COM_CODE B ON ( B.PCODE = 'A03' AND A.PARM_TP = B.CODE ) 
+		WHERE SRV_ID = #SRV_ID# AND PARM_ID = #PARM_ID#
+    </select>
+            
+    
+    <statement id="insert" parameterClass="java.util.Map" resultClass="int">
+		INSERT INTO PARM_MST(SRV_ID, PARM_ID, PARM_DESC, PARM_TP, DEF_VAL, SORTS, REG_DT  ) 
+		VALUES (#SRV_ID#, #PARM_ID#, #PARM_DESC#, #PARM_TP#, #DEF_VAL#, #SORTS#, NOW() )
+    </statement> 
+    
+    <statement id="update" parameterClass="java.util.Map" resultClass="int">
+		UPDATE PARM_MST SET  
+			PARM_DESC=#PARM_DESC#, PARM_TP=#PARM_TP#,  DEF_VAL=#DEF_VAL#, SORTS=#SORTS#, MOD_DT=NOW()  
+		WHERE SRV_ID = #SRV_ID# AND PARM_ID = #PARM_ID# 
+    </statement> 
+        
+    <statement id="delete" parameterClass="java.util.Map" resultClass="int">
+		DELETE FROM PARM_MST WHERE SRV_ID = #SRV_ID# AND PARM_ID = #PARM_ID# 
+    </statement> 
+    
+    
+</sqlMap>

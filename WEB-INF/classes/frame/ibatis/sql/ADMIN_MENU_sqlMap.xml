@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="ADMIN_MENU">
+	
+    <select id="getCount" parameterClass="java.util.Map" resultClass="int">
+        SELECT COUNT(*) FROM ADMIN_MENU A
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+    </select>
+
+    <select id="getListPage" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Admin_menu">
+		SELECT A.MENU_ID, A.MENU_NM, A.GRP_NM, A.GRP_SORTS, A.SORTS, 
+			A.CONT_TYPE, A.CONTENT, A.AUTH_LEVEL, A.IS_USED, A.OPEN_AREA, A.POPUP_OPT, A.REMRKS, A.REG_DT, 
+			B.NAME AS CONT_TYPE_NM, C.NAME AS AUTH_LEVEL_NM, D.NAME AS OPEN_AREA_NM 
+		FROM ADMIN_MENU A
+		LEFT OUTER JOIN COM_CODE B ON ( B.PCODE = 'A10' AND B.CODE = A.CONT_TYPE )
+		LEFT OUTER JOIN COM_CODE C ON ( C.PCODE = 'A09' AND C.CODE = A.AUTH_LEVEL )
+		LEFT OUTER JOIN COM_CODE D ON ( D.PCODE = 'A11' AND D.CODE = A.OPEN_AREA )
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY A.GRP_SORTS, A.SORTS   
+        LIMIT #START_NO#, #PAGE_CNT#
+    </select>
+    
+    <select id="getList" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Admin_menu">
+		SELECT A.MENU_ID, A.MENU_NM, A.GRP_NM, A.GRP_SORTS, A.SORTS, 
+			A.CONT_TYPE, A.CONTENT, A.AUTH_LEVEL, A.IS_USED, A.OPEN_AREA, A.POPUP_OPT, A.REMRKS, A.REG_DT, 
+			B.NAME AS CONT_TYPE_NM, C.NAME AS AUTH_LEVEL_NM, D.NAME AS OPEN_AREA_NM 
+		FROM ADMIN_MENU A
+		LEFT OUTER JOIN COM_CODE B ON ( B.PCODE = 'A10' AND B.CODE = A.CONT_TYPE )
+		LEFT OUTER JOIN COM_CODE C ON ( C.PCODE = 'A09' AND C.CODE = A.AUTH_LEVEL )
+		LEFT OUTER JOIN COM_CODE D ON ( D.PCODE = 'A11' AND D.CODE = A.OPEN_AREA )
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY A.GRP_SORTS, A.SORTS   
+    </select>
+    
+    
+    <select id="selectGroupList" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Admin_menu">
+		SELECT '' AS MENU_ID, '' AS MENU_NM, A.GRP_NM, A.GRP_SORTS, 0 AS SORTS, 
+			'' AS CONT_TYPE, '' AS CONTENT, '' AS AUTH_LEVEL, 1 AS IS_USED, '' AS OPEN_AREA, '' AS POPUP_OPT, '' AS REMRKS, NOW() AS REG_DT, 
+			'' AS CONT_TYPE_NM, '' AS AUTH_LEVEL_NM, '' AS OPEN_AREA_NM 
+		FROM ADMIN_MENU A
+
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        GROUP BY A.GRP_NM, A.GRP_SORTS 
+        ORDER BY A.GRP_SORTS    
+    </select>
+    
+    
+    <select id="getView" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Admin_menu">
+		SELECT A.MENU_ID, A.MENU_NM, A.GRP_NM, A.GRP_SORTS, A.SORTS, 
+			A.CONT_TYPE, A.CONTENT, A.AUTH_LEVEL, A.IS_USED, A.OPEN_AREA, A.POPUP_OPT, A.REMRKS, A.REG_DT, 
+			B.NAME AS CONT_TYPE_NM, C.NAME AS AUTH_LEVEL_NM, D.NAME AS OPEN_AREA_NM 
+		FROM ADMIN_MENU A
+		LEFT OUTER JOIN COM_CODE B ON ( B.PCODE = 'A10' AND B.CODE = A.CONT_TYPE )
+		LEFT OUTER JOIN COM_CODE C ON ( C.PCODE = 'A09' AND C.CODE = A.AUTH_LEVEL )
+		LEFT OUTER JOIN COM_CODE D ON ( D.PCODE = 'A11' AND D.CODE = A.OPEN_AREA )
+        WHERE MENU_ID = #MENU_ID#
+    </select>
+            
+    
+    <statement id="insert" parameterClass="java.util.Map" resultClass="int">
+		INSERT INTO ADMIN_MENU( MENU_ID, MENU_NM, GRP_NM, GRP_SORTS, SORTS, 
+			CONT_TYPE, CONTENT, AUTH_LEVEL, IS_USED, OPEN_AREA, POPUP_OPT, REMRKS, REG_DT  ) 
+		VALUES (#MENU_ID#, #MENU_NM#, #GRP_NM#, #GRP_SORTS#, #SORTS#, 
+			#CONT_TYPE#, #CONTENT#, #AUTH_LEVEL#, #IS_USED#, #OPEN_AREA#, #POPUP_OPT#, #REMRKS#, NOW() )
+    </statement> 
+    
+    <statement id="update" parameterClass="java.util.Map" resultClass="int">
+		UPDATE ADMIN_MENU SET  
+			MENU_NM=#MENU_NM#, GRP_NM=#GRP_NM#,  GRP_SORTS=#GRP_SORTS#, SORTS=#SORTS#, 
+			CONT_TYPE=#CONT_TYPE#, CONTENT=#CONTENT#,  AUTH_LEVEL=#AUTH_LEVEL#, IS_USED=#IS_USED#, 
+			OPEN_AREA=#OPEN_AREA#, POPUP_OPT=#POPUP_OPT#, REMRKS=#REMRKS#  
+		WHERE MENU_ID = #MENU_ID# 
+    </statement> 
+        
+    <statement id="delete" parameterClass="java.util.Map" resultClass="int">
+		DELETE FROM ADMIN_MENU WHERE MENU_ID = #MENU_ID# 
+    </statement> 
+    
+    
+</sqlMap>

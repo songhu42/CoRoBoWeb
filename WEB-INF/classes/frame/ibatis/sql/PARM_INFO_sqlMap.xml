@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="PARM_INFO">
+	
+    <select id="getCount" parameterClass="java.util.Map" resultClass="int">
+        SELECT COUNT(*) FROM PARM_INFO A
+		LEFT OUTER JOIN SRV_INFO B ON (A.SRV_SEQ = B.SRV_SEQ)
+		LEFT OUTER JOIN PARM_MST C ON (C.SRV_ID = B.SRV_ID AND C.PARM_ID = A.PARM_ID)
+		LEFT OUTER JOIN SRV_MST D ON (D.SRV_ID = B.SRV_ID)
+		LEFT OUTER JOIN COM_CODE E ON ( E.PCODE = 'A03' AND C.PARM_TP = E.CODE ) 
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+    </select>
+	
+    <select id="getListPage" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Parm_info">
+		SELECT A.SRV_SEQ, A.PARM_ID, A.PARM_VAL, B.SRV_ID, C.PARM_DESC, C.PARM_TP, C.DEF_VAL, C.SORTS, A.REG_DT, A.MOD_DT, E.NAME AS PARM_TP_NM 
+		FROM PARM_INFO A
+		LEFT OUTER JOIN SRV_INFO B ON (A.SRV_SEQ = B.SRV_SEQ)
+		LEFT OUTER JOIN PARM_MST C ON (C.SRV_ID = B.SRV_ID AND C.PARM_ID = A.PARM_ID)
+		LEFT OUTER JOIN SRV_MST D ON (D.SRV_ID = B.SRV_ID)
+		LEFT OUTER JOIN COM_CODE E ON ( E.PCODE = 'A03' AND C.PARM_TP = E.CODE ) 
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY C.SORTS 
+        LIMIT #START_NO#, #PAGE_CNT#
+    </select>
+    
+    <select id="getList" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Parm_info">
+		SELECT A.SRV_SEQ, A.PARM_ID, A.PARM_VAL, B.SRV_ID, C.PARM_DESC, C.PARM_TP, C.DEF_VAL, C.SORTS, A.REG_DT, A.MOD_DT, E.NAME AS PARM_TP_NM 
+		FROM PARM_INFO A
+		LEFT OUTER JOIN SRV_INFO B ON (A.SRV_SEQ = B.SRV_SEQ)
+		LEFT OUTER JOIN PARM_MST C ON (C.SRV_ID = B.SRV_ID AND C.PARM_ID = A.PARM_ID)
+		LEFT OUTER JOIN SRV_MST D ON (D.SRV_ID = B.SRV_ID)
+		LEFT OUTER JOIN COM_CODE E ON ( E.PCODE = 'A03' AND C.PARM_TP = E.CODE ) 
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY C.SORTS   
+    </select>
+    
+    
+    
+    <select id="getView" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Parm_info">
+		SELECT A.SRV_SEQ, A.PARM_ID, A.PARM_VAL, B.SRV_ID, C.PARM_DESC, C.PARM_TP, C.DEF_VAL, C.SORTS, A.REG_DT, A.MOD_DT, E.NAME AS PARM_TP_NM 
+		FROM PARM_INFO A
+		LEFT OUTER JOIN SRV_INFO B ON (A.SRV_SEQ = B.SRV_SEQ)
+		LEFT OUTER JOIN PARM_MST C ON (C.SRV_ID = B.SRV_ID AND C.PARM_ID = A.PARM_ID)
+		LEFT OUTER JOIN SRV_MST D ON (D.SRV_ID = B.SRV_ID)
+		LEFT OUTER JOIN COM_CODE E ON ( E.PCODE = 'A03' AND C.PARM_TP = E.CODE ) 
+		WHERE SRV_SEQ = #SRV_SEQ# AND PARM_ID = #PARM_ID#
+    </select>
+            
+    
+    <statement id="insert" parameterClass="java.util.Map" resultClass="int">
+		INSERT INTO PARM_INFO(SRV_SEQ, PARM_ID, PARM_VAL, REG_DT  ) 
+		VALUES (#SRV_SEQ#, #PARM_ID#, #PARM_VAL#, NOW() )
+    </statement> 
+    
+    <statement id="update" parameterClass="java.util.Map" resultClass="int">
+		UPDATE PARM_INFO SET  
+			PARM_VAL=#PARM_VAL#, MOD_DT=NOW()  
+		WHERE SRV_SEQ = #SRV_SEQ# AND PARM_ID = #PARM_ID# 
+    </statement> 
+        
+    <statement id="delete" parameterClass="java.util.Map" resultClass="int">
+		DELETE FROM PARM_INFO WHERE SRV_SEQ = #SRV_SEQ# AND PARM_ID = #PARM_ID# 
+    </statement> 
+    
+    
+</sqlMap>

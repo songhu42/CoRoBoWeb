@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="CLASS_MSG">
+
+    <select id="getCount" parameterClass="java.util.Map" resultClass="int">
+		SELECT COUNT(*)
+		FROM CLASS_MSG A
+		LEFT OUTER JOIN USER_MST B ON ( B.USER_ID = A.USER_ID ) 
+		LEFT OUTER JOIN ADMIN_MST C ON ( C.ADMIN_ID = A.ADMIN_ID ) 
+		LEFT OUTER JOIN COM_CODE D ON ( D.PCODE = 'A20' AND A.MSG_TP = D.CODE ) 
+
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+    </select>
+	
+    <select id="getListPage" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Class_msg">
+		SELECT A.MSG_ID, A.ADMIN_ID, A.CLASS_ID, A.USER_ID, A.MSG_TP, A.CONTENT, A.SEND_YN, A.REG_DT, 
+		D.NAME AS MSG_TP_NM, B.USER_NM, B.TEL_NO AS USER_TEL, C.TEL_NO AS ADMIN_TEL
+		FROM CLASS_MSG A
+		LEFT OUTER JOIN USER_MST B ON ( B.USER_ID = A.USER_ID ) 
+		LEFT OUTER JOIN ADMIN_MST C ON ( C.ADMIN_ID = A.ADMIN_ID ) 
+		LEFT OUTER JOIN COM_CODE D ON ( D.PCODE = 'A20' AND A.MSG_TP = D.CODE ) 
+		
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY A.MSG_ID DESC 
+        LIMIT #START_NO#, #PAGE_CNT#
+        
+    </select>
+    
+    
+    <select id="getList" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Class_msg">
+		SELECT A.MSG_ID, A.ADMIN_ID, A.CLASS_ID, A.USER_ID, A.MSG_TP, A.CONTENT, A.SEND_YN, A.REG_DT, 
+		D.NAME AS MSG_TP_NM, B.USER_NM, B.TEL_NO AS USER_TEL, C.TEL_NO AS ADMIN_TEL
+		FROM CLASS_MSG A
+		LEFT OUTER JOIN USER_MST B ON ( B.USER_ID = A.USER_ID ) 
+		LEFT OUTER JOIN ADMIN_MST C ON ( C.ADMIN_ID = A.ADMIN_ID ) 
+		LEFT OUTER JOIN COM_CODE D ON ( D.PCODE = 'A20' AND A.MSG_TP = D.CODE ) 
+
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY A.MSG_ID DESC 
+        
+    </select>
+    
+    <select id="getView" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Class_msg">
+		SELECT A.MSG_ID, A.ADMIN_ID, A.CLASS_ID, A.USER_ID, A.MSG_TP, A.CONTENT, A.SEND_YN, A.REG_DT, 
+		D.NAME AS MSG_TP_NM, B.USER_NM, B.TEL_NO AS USER_TEL, C.TEL_NO AS ADMIN_TEL
+		FROM CLASS_MSG A
+		LEFT OUTER JOIN USER_MST B ON ( B.USER_ID = A.USER_ID ) 
+		LEFT OUTER JOIN ADMIN_MST C ON ( C.ADMIN_ID = A.ADMIN_ID ) 
+		LEFT OUTER JOIN COM_CODE D ON ( D.PCODE = 'A20' AND A.MSG_TP = D.CODE ) 
+		
+        WHERE A.MSG_ID = #MSG_ID# 
+    </select>
+            
+    <statement id="insert" parameterClass="java.util.Map" resultClass="int">
+		INSERT INTO CLASS_MSG(MSG_ID, ADMIN_ID, CLASS_ID, USER_ID, MSG_TP, CONTENT, SEND_YN, REG_DT) 
+		VALUES (#MSG_ID#, #ADMIN_ID#, #CLASS_ID#, #USER_ID#, #MSG_TP#, #CONTENT#, #SEND_YN#, NOW())
+    </statement> 
+    
+    <statement id="update" parameterClass="java.util.Map" resultClass="int">
+		UPDATE CLASS_MSG SET  
+			ADMIN_ID=#ADMIN_ID#, CLASS_ID=#CLASS_ID#, USER_ID=#USER_ID#, MSG_TP=#MSG_TP#, CONTENT=#CONTENT#, 
+			SEND_YN=#SEND_YN#
+		WHERE MSG_ID = #MSG_ID# 
+    </statement> 
+        
+    <statement id="delete" parameterClass="java.util.Map" resultClass="int">
+		DELETE FROM CLASS_MSG WHERE MSG_ID = #MSG_ID# 
+    </statement> 
+        
+</sqlMap>

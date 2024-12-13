@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="CLASS_INFO">
+	
+    <select id="getCount" parameterClass="java.util.Map" resultClass="int">
+		SELECT COUNT(*)
+		FROM CLASS_INFO A
+		LEFT OUTER JOIN USER_MST B ON (A.USER_ID = B.USER_ID)
+
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+    </select>
+	
+    <select id="getListPage" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Class_info">
+		SELECT DATE_FORMAT(A.CLASS_DT, '%Y-%m-%d') AS CLASS_DT, A.CLASS_ID, A.USER_ID, A.ADMIN_ID, A.STR_TM, A.END_TM, A.IS_DONE, 
+		A.CONTENT, A.CREATE_DT, A.REG_DT, B.USER_NM, C.STATE,C.REG_CNT + C.ADD_CNT AS TOT_TIMES, B.TEL_NO AS USER_TEL, 
+		( SELECT COUNT(*) FROM CLASS_INFO WHERE CLASS_ID = A.CLASS_ID AND USER_ID = A.USER_ID AND CLASS_DT <![CDATA[<]]> A.CLASS_DT ) + 1 AS CUR_TIMES 
+		FROM CLASS_INFO A
+		LEFT OUTER JOIN USER_MST B ON (A.USER_ID = B.USER_ID)
+		LEFT OUTER JOIN CLASS_MST C ON ( A.CLASS_ID = C.CLASS_ID)
+		
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY A.CLASS_ID, A.USER_ID, A.CLASS_DT 
+        LIMIT #START_NO#, #PAGE_CNT#
+        
+    </select>
+    
+    
+    <select id="getList" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Class_info">
+		SELECT DATE_FORMAT(A.CLASS_DT, '%Y-%m-%d') AS CLASS_DT, A.CLASS_ID, A.USER_ID, A.ADMIN_ID, A.STR_TM, A.END_TM, A.IS_DONE, 
+		A.CONTENT, A.CREATE_DT, A.REG_DT, B.USER_NM, C.STATE,C.REG_CNT + C.ADD_CNT AS TOT_TIMES, B.TEL_NO AS USER_TEL, 
+		( SELECT COUNT(*) FROM CLASS_INFO WHERE CLASS_ID = A.CLASS_ID AND USER_ID = A.USER_ID AND CLASS_DT <![CDATA[<]]> A.CLASS_DT ) + 1 AS CUR_TIMES 
+		FROM CLASS_INFO A
+		LEFT OUTER JOIN USER_MST B ON (A.USER_ID = B.USER_ID)
+		LEFT OUTER JOIN CLASS_MST C ON ( A.CLASS_ID = C.CLASS_ID)
+
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY A.CLASS_ID, A.USER_ID, A.CLASS_DT 
+        
+    </select>
+    
+    <select id="getView" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Class_info">
+		SELECT DATE_FORMAT(A.CLASS_DT, '%Y-%m-%d') AS CLASS_DT, A.CLASS_ID, A.USER_ID, A.ADMIN_ID, A.STR_TM, A.END_TM, A.IS_DONE, 
+		A.CONTENT, A.CREATE_DT, A.REG_DT, B.USER_NM, C.STATE,C.REG_CNT + C.ADD_CNT AS TOT_TIMES, B.TEL_NO AS USER_TEL,  
+		( SELECT COUNT(*) FROM CLASS_INFO WHERE CLASS_ID = A.CLASS_ID AND USER_ID = A.USER_ID AND CLASS_DT <![CDATA[<]]> A.CLASS_DT ) + 1 AS CUR_TIMES 
+		FROM CLASS_INFO A
+		LEFT OUTER JOIN USER_MST B ON (A.USER_ID = B.USER_ID)
+		LEFT OUTER JOIN CLASS_MST C ON ( A.CLASS_ID = C.CLASS_ID)
+		
+        WHERE A.CLASS_DT = #CLASS_DT# AND A.USER_ID = #USER_ID# AND A.CLASS_DT = #CLASS_DT# 
+    </select>
+    <select id="getViewString" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Class_info">
+		SELECT DATE_FORMAT(A.CLASS_DT, '%Y-%m-%d') AS CLASS_DT, A.CLASS_ID, A.USER_ID, A.ADMIN_ID, A.STR_TM, A.END_TM, A.IS_DONE, 
+		A.CONTENT, A.CREATE_DT, A.REG_DT, B.USER_NM, C.STATE,C.REG_CNT + C.ADD_CNT AS TOT_TIMES, B.TEL_NO AS USER_TEL, 
+		( SELECT COUNT(*) FROM CLASS_INFO WHERE CLASS_ID = A.CLASS_ID AND USER_ID = A.USER_ID AND CLASS_DT <![CDATA[<]]> A.CLASS_DT ) + 1 AS CUR_TIMES 
+		FROM CLASS_INFO A
+		LEFT OUTER JOIN USER_MST B ON (A.USER_ID = B.USER_ID)
+		LEFT OUTER JOIN CLASS_MST C ON ( A.CLASS_ID = C.CLASS_ID)
+		
+        WHERE DATE_FORMAT(A.CLASS_DT, '%Y-%m-%d') = #CLASS_DT# AND A.USER_ID = #USER_ID# AND A.CLASS_DT = #CLASS_DT# 
+    </select>
+            
+    <statement id="insert" parameterClass="java.util.Map" resultClass="int">
+		INSERT INTO CLASS_INFO(CLASS_DT, CLASS_ID, USER_ID, ADMIN_ID, STR_TM, END_TM, IS_DONE, CONTENT, CREATE_DT, REG_DT) 
+		VALUES (#CLASS_DT#, #CLASS_ID#, #USER_ID#, #ADMIN_ID#, #STR_TM#, #END_TM#, #IS_DONE#, #CONTENT#, NOW(), NOW())
+    </statement> 
+    
+    <statement id="update" parameterClass="java.util.Map" resultClass="int">
+		UPDATE CLASS_INFO SET  
+			STR_TM=#STR_TM#, END_TM=#END_TM#, IS_DONE=#IS_DONE#, CONTENT=#CONTENT# 
+		WHERE DATE_FORMAT(CLASS_DT, '%Y-%m-%d') = #CLASS_DT# AND CLASS_ID = #CLASS_ID# AND USER_ID = #USER_ID# 
+    </statement> 
+        
+    <statement id="updateDates" parameterClass="java.util.Map" resultClass="int">
+		UPDATE CLASS_INFO SET  
+			CREATE_DT=#CREATE_DT#, REG_DT=#REG_DT#
+		WHERE DATE_FORMAT(CLASS_DT, '%Y-%m-%d') = #CLASS_DT# AND CLASS_ID = #CLASS_ID# AND USER_ID = #USER_ID# 
+    </statement> 
+
+    <statement id="delete" parameterClass="java.util.Map" resultClass="int">
+		DELETE FROM CLASS_INFO 
+		WHERE DATE_FORMAT(CLASS_DT, '%Y-%m-%d') = #CLASS_DT# AND CLASS_ID = #CLASS_ID# AND USER_ID = #USER_ID# 
+    </statement> 
+        
+</sqlMap>

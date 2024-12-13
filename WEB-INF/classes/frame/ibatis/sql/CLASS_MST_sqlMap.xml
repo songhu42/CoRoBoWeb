@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="CLASS_MST">
+
+	<select id="countAllClass" parameterClass="java.util.Map" resultClass="int">
+		SELECT COUNT(*)
+		FROM CLASS_INFO A
+		WHERE A.CLASS_ID = #CLASS_ID# 
+    </select>
+    
+	<select id="countStrClass" parameterClass="java.util.Map" resultClass="int">
+		SELECT COUNT(*)
+		FROM CLASS_INFO A
+		WHERE A.CLASS_ID = #CLASS_ID# AND A.IS_DONE > 0
+    </select>
+    
+    <statement id="deleteClass" parameterClass="java.util.Map" resultClass="int">
+		DELETE FROM CLASS_INFO WHERE CLASS_ID = #CLASS_ID# 
+    </statement> 
+	
+    <select id="getCount" parameterClass="java.util.Map" resultClass="int">
+		SELECT COUNT(*)
+		FROM CLASS_MST A
+		LEFT OUTER JOIN COM_CODE D ON ( D.PCODE = 'A18' AND A.CLASS_TP = D.CODE ) 
+		LEFT OUTER JOIN COM_CODE E ON ( E.PCODE = 'A19' AND A.STATE = E.CODE ) 
+
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+    </select>
+	
+    <select id="getListPage" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Class_mst">
+		SELECT A.CLASS_ID, A.ADMIN_ID, A.USER_IDS, A.CLASS_TP, A.CLASS_WDS, A.STR_TM, A.END_TM, A.PRICE, 
+		A.TOT_PRICE, A.REG_CNT, A.ADD_CNT, A.CREAT_YN, A.START_DT, A.CREATE_DT, A.STATE, A.REG_DT, 
+		D.NAME AS CLASS_TP_NM, E.NAME AS STATE_NM, GET_USER_NMS(A.USER_IDS) AS USER_IDS_NM 
+		FROM CLASS_MST A
+		LEFT OUTER JOIN COM_CODE D ON ( D.PCODE = 'A18' AND A.CLASS_TP = D.CODE ) 
+		LEFT OUTER JOIN COM_CODE E ON ( E.PCODE = 'A19' AND A.STATE = E.CODE ) 
+		
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY A.CLASS_ID ASC 
+        LIMIT #START_NO#, #PAGE_CNT#
+        
+    </select>
+    
+    
+    <select id="getList" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Class_mst">
+		SELECT A.CLASS_ID, A.ADMIN_ID, A.USER_IDS, A.CLASS_TP, A.CLASS_WDS, A.STR_TM, A.END_TM, A.PRICE, 
+		A.TOT_PRICE, A.REG_CNT, A.ADD_CNT, A.CREAT_YN, A.START_DT, A.CREATE_DT, A.STATE, A.REG_DT, 
+		D.NAME AS CLASS_TP_NM, E.NAME AS STATE_NM, GET_USER_NMS(USER_IDS) AS USER_IDS_NM
+		FROM CLASS_MST A
+		LEFT OUTER JOIN COM_CODE D ON ( D.PCODE = 'A18' AND A.CLASS_TP = D.CODE ) 
+		LEFT OUTER JOIN COM_CODE E ON ( E.PCODE = 'A19' AND A.STATE = E.CODE ) 
+
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY A.CLASS_ID ASC 
+        
+    </select>
+    
+    <select id="getView" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Class_mst">
+		SELECT A.CLASS_ID, A.ADMIN_ID, A.USER_IDS, A.CLASS_TP, A.CLASS_WDS, A.STR_TM, A.END_TM, A.PRICE, 
+		A.TOT_PRICE, A.REG_CNT, A.ADD_CNT, A.CREAT_YN, A.START_DT, A.CREATE_DT, A.STATE, A.REG_DT,
+		D.NAME AS CLASS_TP_NM, E.NAME AS STATE_NM, GET_USER_NMS(USER_IDS) AS USER_IDS_NM
+		FROM CLASS_MST A
+		LEFT OUTER JOIN COM_CODE D ON ( D.PCODE = 'A18' AND A.CLASS_TP = D.CODE ) 
+		LEFT OUTER JOIN COM_CODE E ON ( E.PCODE = 'A19' AND A.STATE = E.CODE ) 
+		
+        WHERE A.CLASS_ID = #CLASS_ID# 
+    </select>
+            
+    <statement id="insert" parameterClass="java.util.Map" resultClass="int">
+		INSERT INTO CLASS_MST(ADMIN_ID, USER_IDS, CLASS_TP, CLASS_WDS, STR_TM, END_TM, PRICE, TOT_PRICE, REG_CNT, ADD_CNT, CREAT_YN, START_DT, CREATE_DT, STATE, REG_DT) 
+		VALUES (#ADMIN_ID#, #USER_IDS#, #CLASS_TP#, #CLASS_WDS#, #STR_TM#, #END_TM#, #PRICE#, #TOT_PRICE#, #REG_CNT#, #ADD_CNT#, #CREAT_YN#, #START_DT#, #CREATE_DT#, #STATE#, NOW())
+    </statement> 
+    
+    <statement id="update" parameterClass="java.util.Map" resultClass="int">
+		UPDATE CLASS_MST SET  
+			ADMIN_ID=#ADMIN_ID#, USER_IDS=#USER_IDS#, CLASS_TP=#CLASS_TP#, CLASS_WDS=#CLASS_WDS#, STR_TM=#STR_TM#, 
+			END_TM=#END_TM#, PRICE=#PRICE#, TOT_PRICE=#TOT_PRICE#, REG_CNT=#REG_CNT#, ADD_CNT=#ADD_CNT#, CREAT_YN=#CREAT_YN#, 
+			START_DT=#START_DT#, CREATE_DT=#CREATE_DT#, STATE=#STATE#
+		WHERE CLASS_ID = #CLASS_ID# 
+    </statement> 
+        
+    <statement id="delete" parameterClass="java.util.Map" resultClass="int">
+		DELETE FROM CLASS_MST WHERE CLASS_ID = #CLASS_ID# 
+    </statement> 
+        
+</sqlMap>

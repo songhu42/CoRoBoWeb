@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SYNC_DATA_INFO">
+	
+    <select id="getNextDbVer" parameterClass="java.util.Map" resultClass="int">
+        SELECT IFNULL(MAX(DB_VER),0)+1  FROM SYNC_DATA_INFO  
+    </select>
+
+    <select id="getCount" parameterClass="java.util.Map" resultClass="int">
+        SELECT COUNT(*) FROM SYNC_DATA_INFO A
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+    </select>
+    
+    <select id="getListPage" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Sync_data_info">
+		SELECT A.DB_VER, A.SEQ_NO, A.DB_TYPE, A.SQL_STR, A.REG_DT  
+		FROM SYNC_DATA_INFO A
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY A.SEQ_NO     
+        LIMIT #START_NO#, #PAGE_CNT#
+    </select>
+    
+    <select id="getList" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Sync_data_info">
+		SELECT A.DB_VER, A.SEQ_NO, A.DB_TYPE, A.SQL_STR, A.REG_DT  
+		FROM SYNC_DATA_INFO A
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+    </select>
+    
+    
+    <select id="getView" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Sync_data_info">
+		SELECT A.DB_VER, A.SEQ_NO, A.DB_TYPE, A.SQL_STR, A.REG_DT  
+		FROM SYNC_DATA_INFO A
+        WHERE A.DB_VER = #DB_VER# AND A.SEQ_NO = #SEQ_NO#
+    </select>
+            
+    
+    <statement id="insert" parameterClass="java.util.Map" resultClass="int">
+		INSERT INTO SYNC_DATA_INFO( DB_VER, SEQ_NO, DB_TYPE, SQL_STR, REG_DT  ) 
+		VALUES ( #DB_VER#, #SEQ_NO#, #DB_TYPE#, #SQL_STR#, NOW() )
+    </statement> 
+    
+    <statement id="update" parameterClass="java.util.Map" resultClass="int">
+		UPDATE SYNC_DATA_INFO SET  
+			SQL_STR=#SQL_STR#, DB_TYPE=#DB_TYPE# 
+		WHERE DB_VER = #DB_VER# AND SEQ_NO = #SEQ_NO# 
+    </statement> 
+    
+    <statement id="execute" parameterClass="java.util.Map" resultClass="int">
+		$SQL$
+    </statement> 
+    
+    <statement id="delete" parameterClass="java.util.Map" resultClass="int">
+		DELETE FROM SYNC_DATA_INFO WHERE DB_VER = #DB_VER# AND SEQ_NO = #SEQ_NO# 
+    </statement> 
+    
+    
+</sqlMap>

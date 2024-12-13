@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="DAILY_SALES">
+	    
+    
+    <select id="getCount" parameterClass="java.util.Map" resultClass="int">
+        SELECT COUNT(*) 
+		FROM DAILY_SALES WHERE DATE = #SUMUP_DT#   
+    </select>
+    
+    <select id="getSumCount" parameterClass="java.util.Map" resultClass="int">
+        SELECT MAX(SUM_CNT)  
+		FROM DAILY_SALES WHERE DATE = #SUMUP_DT#   
+    </select>
+    
+    <select id="getUserCount" parameterClass="java.util.Map" resultClass="int">
+        SELECT COUNT(*) 
+		FROM USER_MST WHERE DATE_FORMAT(JOIN_DT, '%Y%m%d') = #SUMUP_DT#   
+    </select>
+    
+    <select id="getDailySales" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.DailySales">
+        SELECT DATE, SUM(NEW_USER) AS NEW_USER, SUM(BUY_CNT) AS BUY_CNT, SUM(BUY_AMT) AS BUY_AMT, SUM(ADV_CNT) AS SHARE_TOT, 
+        SUM(SHARE_TOT) AS ADV_CNT, SUM(SHARE_FB) AS SHARE_FB, SUM(SHARE_CACAO) AS SHARE_CACAO, SUM(SHARE_STORY) AS SHARE_STORY, 
+        SUM(FEEDBACK_CNT) AS FEEDBACK_CNT, SUM(GAME_USER) AS GAME_USER, SUM(GAME_CNT) AS GAME_CNT
+        FROM DAILY_SALES 
+        
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        GROUP BY DATE
+        ORDER BY DATE
+        
+    </select>
+    
+    
+    <select id="getDailySalesDesc" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.DailySales">
+        SELECT DATE, SUM(NEW_USER) AS NEW_USER, SUM(BUY_CNT) AS BUY_CNT, SUM(BUY_AMT) AS BUY_AMT, SUM(ADV_CNT) AS SHARE_TOT, 
+        SUM(SHARE_TOT) AS ADV_CNT, SUM(SHARE_FB) AS SHARE_FB, SUM(SHARE_CACAO) AS SHARE_CACAO, SUM(SHARE_STORY) AS SHARE_STORY, 
+        SUM(FEEDBACK_CNT) AS FEEDBACK_CNT, SUM(GAME_USER) AS GAME_USER, SUM(GAME_CNT) AS GAME_CNT
+        FROM DAILY_SALES 
+        
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        GROUP BY DATE
+        ORDER BY DATE DESC 
+        
+    </select>
+    <statement id="sumupDailySales" parameterClass="java.util.Map" resultClass="int">
+		INSERT INTO DAILY_SALES 
+		SELECT A.DATE, A.LOGIN_TYPE AS GAME_TYPE, A.DEVICE_TOKEN AS DEVICE_TYPE,
+	 (SELECT COUNT(*) FROM USER_MST WHERE DATE_FORMAT(JOIN_DT, '%Y%m%d') = A.DATE AND LOGIN_TYPE = A.LOGIN_TYPE AND DEVICE_TOKEN = A.DEVICE_TOKEN) AS NEW_USER, 
+	(SELECT COUNT(*) FROM BUY_HISTORY P 
+		INNER JOIN USER_MST Q ON (P.USER_ID = Q.USER_ID)
+		WHERE DATE_FORMAT(P.REG_DT, '%Y%m%d') = A.DATE AND Q.LOGIN_TYPE = A.LOGIN_TYPE AND Q.DEVICE_TOKEN = A.DEVICE_TOKEN ) AS BUY_CNT, 
+	(SELECT GET_BUY_AMT(A.DATE, A.LOGIN_TYPE, A.DEVICE_TOKEN)) AS BUY_AMT, 
+	SUM(IF(A.ITEM_ID IN ('fb_share', 'cacao_share', 'story_share'), 1, 0)) AS SHARE_TOT, 
+	SUM(IF(A.ITEM_ID = 'adv', 1, 0)) AS ADV_CNT, 
+	SUM(IF(A.ITEM_ID = 'fb_share', 1, 0)) AS SHARE_FB, 
+	SUM(IF(A.ITEM_ID = 'cacao_share', 1, 0)) AS SHARE_CACAO, 
+	SUM(IF(A.ITEM_ID = 'story_share', 1, 0)) AS SHARE_STORY, 
+	SUM(IF(A.ITEM_ID = 'feedback', 1, 0)) AS FEEDBACK_CNT, 
+
+	(SELECT GET_USER_CNT(A.DATE, A.LOGIN_TYPE, A.DEVICE_TOKEN) ) AS GAME_USER, 
+	(SELECT COUNT(*) FROM  GAME_RES S 
+		INNER JOIN USER_MST T ON ( S.USER_ID = T.USER_ID ) 
+		WHERE DATE_FORMAT(S.REG_DT, '%Y%m%d') = A.DATE AND T.LOGIN_TYPE = A.LOGIN_TYPE AND T.DEVICE_TOKEN = A.DEVICE_TOKEN ) AS GAME_CNT, NOW(), #SUM_CNT#
+
+ 	FROM (
+		SELECT #SUMUP_DT# AS DATE, Z.LOGIN_TYPE, Z.DEVICE_TOKEN, 
+		X.USER_ID, X.ITEM_ID, X.REG_DT
+		FROM ( SELECT LOGIN_TYPE, DEVICE_TOKEN 
+			FROM USER_MST WHERE DEVICE_TOKEN IS NOT NULL GROUP BY LOGIN_TYPE, DEVICE_TOKEN ) Z 
+		LEFT OUTER JOIN ( SELECT B.USER_ID, C.LOGIN_TYPE, C.DEVICE_TOKEN, B.ITEM_ID, B.REG_DT 
+			FROM REWARD_HEART_HISTORY B 
+			INNER JOIN USER_MST C ON (B.USER_ID = C.USER_ID) 
+			WHERE DATE_FORMAT(B.REG_DT, '%Y%m%d') = #SUMUP_DT# AND  B.ITEM_ID IN ('adv', 'fb_share', 'cacao_share', 'story_share', 'feedback') ) X ON (X.LOGIN_TYPE = Z.LOGIN_TYPE AND X.DEVICE_TOKEN = Z.DEVICE_TOKEN)
+		
+		) A 
+		GROUP BY A.DATE, A.LOGIN_TYPE, A.DEVICE_TOKEN
+		
+    </statement> 
+    
+    
+    <statement id="delete" parameterClass="java.util.Map" resultClass="int">
+		DELETE FROM DAILY_SALES 
+		WHERE DATE = #SUMUP_DT# 
+    </statement> 
+    
+</sqlMap>

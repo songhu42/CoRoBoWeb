@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="MSN_SRV">
+	
+    <select id="getCount" parameterClass="java.util.Map" resultClass="int">
+        SELECT COUNT(*) FROM MSN_SRV_INFO A
+		LEFT OUTER JOIN MSN_MST B ON ( B.MSN_ID = A.MSN_ID )
+		LEFT OUTER JOIN SRV_INFO C ON ( C.SRV_SEQ = A.SRV_SEQ )
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+    </select>
+	
+    <select id="getListPage" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Msn_srv">
+		SELECT A.MSN_SEQ, A.SRV_SEQ, A.MSN_ID, A.SRV_ID, A.SORTS, B.MSN_NM, B.MSN_DESC, C.SRV_DETAIL, C.SRV_CALL, 
+			C.SRV_DUR, C.PRE_DUR, C.AFT_DUR, A.REG_DT, A.MOD_DT 
+		FROM MSN_SRV_INFO A
+		LEFT OUTER JOIN MSN_MST B ON ( B.MSN_ID = A.MSN_ID )
+		LEFT OUTER JOIN SRV_INFO C ON ( C.SRV_SEQ = A.SRV_SEQ )
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY A.SORTS 
+        LIMIT #START_NO#, #PAGE_CNT#
+    </select>
+    
+    <select id="getList" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Msn_srv">
+		SELECT A.MSN_SEQ, A.SRV_SEQ, A.MSN_ID, A.SRV_ID, A.SORTS, B.MSN_NM, B.MSN_DESC, C.SRV_DETAIL, C.SRV_CALL, 
+			C.SRV_DUR, C.PRE_DUR, C.AFT_DUR, A.REG_DT, A.MOD_DT 
+		FROM MSN_SRV_INFO A
+		LEFT OUTER JOIN MSN_MST B ON ( B.MSN_ID = A.MSN_ID )
+		LEFT OUTER JOIN SRV_INFO C ON ( C.SRV_SEQ = A.SRV_SEQ )
+        <isNotEmpty property="WHERE_OPTION">
+        $WHERE_OPTION$
+        </isNotEmpty>
+        ORDER BY A.SORTS   
+    </select>
+    
+    
+    
+    <select id="getView" parameterClass="java.util.Map" resultClass="com.humanval.sipt.dao.Msn_srv">
+		SELECT A.MSN_SEQ, A.SRV_SEQ, A.MSN_ID, A.SRV_ID, A.SORTS, B.MSN_NM, B.MSN_DESC, C.SRV_DETAIL, C.SRV_CALL, 
+			C.SRV_DUR, C.PRE_DUR, C.AFT_DUR, A.REG_DT, A.MOD_DT 
+		FROM MSN_SRV_INFO A
+		LEFT OUTER JOIN MSN_MST B ON ( B.MSN_ID = A.MSN_ID )
+		LEFT OUTER JOIN SRV_INFO C ON ( C.SRV_SEQ = A.SRV_SEQ )
+		WHERE MSN_SEQ = #MSN_SEQ#
+    </select>
+            
+    
+    <statement id="insert" parameterClass="java.util.Map" resultClass="int">
+		INSERT INTO MSN_SRV_INFO( SRV_SEQ, MSN_ID, SRV_ID, SORTS, REG_DT  ) 
+		VALUES (#SRV_SEQ#, #MSN_ID#, #SRV_ID#, #SORTS#, NOW() )
+    </statement> 
+    
+    <statement id="update" parameterClass="java.util.Map" resultClass="int">
+		UPDATE MSN_SRV_INFO SET  
+			SRV_SEQ=#SRV_SEQ#, MSN_ID=#MSN_ID#,  SRV_ID=#SRV_ID#, SORTS=#SORTS#, MOD_DT=NOW()  
+		WHERE MSN_SEQ = #MSN_SEQ# 
+    </statement> 
+        
+    <statement id="delete" parameterClass="java.util.Map" resultClass="int">
+		DELETE FROM MSN_SRV_INFO WHERE MSN_SEQ = #MSN_SEQ# 
+    </statement> 
+    
+    
+</sqlMap>
