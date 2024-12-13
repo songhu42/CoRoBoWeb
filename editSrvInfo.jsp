@@ -68,7 +68,7 @@
 			// parameter update ... 
 
 			// parm update commands .. 
-			for(int i=0; i<parm_cnt; i++ ) {
+			for(int i=1; i<=parm_cnt; i++ ) {
 				String parm_id = ComUtil.chNull(request.getParameter("parm_id"+i));
 				String parm_val = new String(ComUtil.chNull(request.getParameter("parm_val"+i)).getBytes("8859_1"), "UTF-8");
 				
@@ -76,6 +76,8 @@
 				parm.setSrv_seq(srv_seq); 
 				parm.setParm_id(parm_id); 
 				parm.setParm_val(parm_val);  
+
+				System.out.println(" seq : " + srv_seq + " id : " +parm_id + " val : " + parm_val); 
 				
 				parmService.update(parm); 
 			}

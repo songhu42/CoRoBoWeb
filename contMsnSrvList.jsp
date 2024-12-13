@@ -45,6 +45,12 @@
 		msn_srv.setSorts(sorts+1); 
 		
 		service.insert(msn_srv); 
+	} else if( listCmd.equals("EXC") ) {
+		Msn_mst info = new Msn_mst(); 
+		info.setMsn_id(msn_id); 
+		
+		System.out.println(" Mission Execute :" + msn_id ); 
+		mstService.execute(info); 
 	}
 	
 	String whereOption = "WHERE 1=1 "; 
@@ -100,7 +106,7 @@
 													<input type="button" class="full" value="검색" onclick="javascript:cmdSearch();"/>
 													</td>
 
-													<td  width="40%" rowspan="1">
+													<td  width="30%" rowspan="1">
 			<select name="faSrvSeq" id="faSrvSeq" class="f_select" >
 				<option value=""  >추가할 서비스를 선택하세요.</option>
 			<%
@@ -113,6 +119,9 @@
 													</td>
 													<td  width="10%" rowspan="1">
 													<input type="button" class="full" value="서비스 추가" onclick="javascript:cmdAdd();"/>
+													</td>
+													<td  width="10%" rowspan="1">
+													<input type="button" class="full" value="서비스 실행" onclick="javascript:cmdExc();"/>
 													</td>
 												</tr>
 																							
@@ -214,6 +223,14 @@ function cmdAdd() {
 		alert("추가할 서비스를 선택하세요!"); 
 	} else {
 		$("#listCmd").val("ADD"); 
+		cmdSearch()
+	}
+}
+function cmdExc() {
+	if( $("#faMsnId").val() == "" ) {
+		alert("실행할 미션을 선택하세요!"); 
+	} else {
+		$("#listCmd").val("EXC"); 
 		cmdSearch()
 	}
 }
