@@ -94,8 +94,8 @@
 
 	<tr>
 		<th class="mandatory">미션 ID</th>
-		<td colspan="1"><input type="hidden" name="msn_seq" size="30" maxlength="30" class="f_input" value="<%=info.getMsn_seq()%>" readonly></td>
-		<td colspan="1"><input type="text" name="msn_id" size="30" maxlength="30" class="f_input" value="<%=info.getMsn_id()%>" readonly></td>
+		<td colspan="1"><input type="hidden" name="msn_seq" size="30" maxlength="30" class="f_input" value="<%=info.getMsn_seq()%>" readonly> 
+		<input type="text" name="msn_id" size="30" maxlength="30" class="f_input" value="<%=info.getMsn_id()%>" readonly></td>
 		<th class="mandatory">미션명</th>
 		<td colspan="1"><input type="text" name="msn_nm" size="30" maxlength="30" class="f_input" value="<%=info.getMsn_nm()%>" readonly></td>
 	</tr>
@@ -117,6 +117,12 @@
 		<td colspan="1"><input type="text" name="srv_call" size="30" maxlength="30" class="f_input" value="<%=info.getSrv_call()%>" readonly></td>
 		<th class="mandatory">실행순서</th>
 		<td colspan="1"><input type="text" name="sorts" size="30" maxlength="30" class="f_input" value="<%=info.getSorts()%>" ></td>
+	</tr>
+	<tr>
+		<th class="mandatory">대기시간(ms)</th>
+		<td colspan="1"><input type="text" name="pre_dur" size="30" maxlength="30" class="f_input" value="<%=info.getPre_dur()%>" readonly></td>
+		<th class="mandatory">실행시간(ms)</th>
+		<td colspan="1"><input type="text" name="srv_dur" size="30" maxlength="30" class="f_input" value="<%=info.getSrv_dur()%>" readonly></td>
 	</tr>
 
 	<tr>
