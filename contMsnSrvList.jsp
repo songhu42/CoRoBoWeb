@@ -52,8 +52,7 @@
 		System.out.println(" Mission copy :" + msn_id ); 
 		mstService.msnCopy(info); 
 	} else if( listCmd.equals("EXC") ) {
-		Msn_mst info = new Msn_mst(); 
-		info.setMsn_id(msn_id); 
+		Msn_mst info = mstService.select(msn_id);   
 		
 		System.out.println(" Mission Execute :" + msn_id ); 
 		mstService.execute(info); 
