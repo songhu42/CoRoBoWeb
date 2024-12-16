@@ -82,7 +82,7 @@
 				parmService.update(parm); 
 			}
 		} else if( saveAction.equals("N") ) {
-			System.out.println("insert : " + srv_seq + ":" + srv_detail + ":" + srv_dur); 
+			System.out.println("insert : " + srv_seq + ":" + srv_call + ":" + srv_dur + ":" + sorts + ":" + srv_detail + ":" + pre_dur); 
 			service.insert(info); 
 		}  
 	}

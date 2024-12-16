@@ -14,6 +14,10 @@
         </isNotEmpty>
     </select>
 
+    <select id="getSrvSeq" parameterClass="java.util.Map" resultClass="int">
+        SELECT MAX(SRV_SEQ) FROM SRV_INFO
+    </select>
+    
     <select id="getParmCount" parameterClass="java.util.Map" resultClass="int">
         SELECT COUNT(*) FROM PARM_INFO A
 		WHERE SRV_SEQ = #SRV_SEQ# 
