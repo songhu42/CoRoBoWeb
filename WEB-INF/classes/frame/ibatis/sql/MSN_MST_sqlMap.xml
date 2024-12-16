@@ -42,6 +42,18 @@
 		WHERE MSN_ID = #MSN_ID#
     </select>
             
+    <statement id="msnCopy" parameterClass="java.util.Map" resultClass="int">
+		INSERT INTO MSN_MST( MSN_NM, MSN_DESC, MSN_TP, ROBO_CNT, ROBO_MAIN, 
+			ROBO_SUB1, ROBO_SUB2, ROBO_SUB3, ROBO_SUB4, SORTS, REG_DT  ) 
+		SELECT MSN_NM, MSN_DESC, MSN_TP, ROBO_CNT, ROBO_MAIN, 
+			ROBO_SUB1, ROBO_SUB2, ROBO_SUB3, ROBO_SUB4, SORTS, NOW() 
+		FROM MSN_MST WHERE MSN_ID = #MSN_ID#; 
+		
+		INSERT INTO MSN_SRV_INFO( SRV_SEQ, MSN_ID, SRV_ID, SORTS, REG_DT  ) 
+		SELECT SRV_SEQ, (SELECT MAX(MSN_ID) FROM MSN_MST), SRV_ID, SORTS, NOW() 
+		FROM MSN_SRV_INFO WHERE MSN_ID = #MSN_ID#; 
+		
+    </statement> 
     
     <statement id="insert" parameterClass="java.util.Map" resultClass="int">
 		INSERT INTO MSN_MST( MSN_NM, MSN_DESC, MSN_TP, ROBO_CNT, ROBO_MAIN, 
@@ -59,7 +71,8 @@
     </statement> 
         
     <statement id="delete" parameterClass="java.util.Map" resultClass="int">
-		DELETE FROM MSN_MST WHERE MSN_ID = #MSN_ID# 
+    	DELETE FROM MSN_SRV_INFO WHERE MSN_ID =  #MSN_ID# ;
+		DELETE FROM MSN_MST WHERE MSN_ID = #MSN_ID# ;
     </statement> 
     
     
