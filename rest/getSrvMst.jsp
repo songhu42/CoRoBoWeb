@@ -12,7 +12,7 @@
     System.out.println("srv_id : " + srv_id); 
 	if( !srv_id.equals("") ) {
 		Srv_mstService service = new Srv_mstService(); 
-		Srv_mst srv = service.select(srv_id);   
+		Srv_mst srv = service.select(Long.parseLong(srv_id));   
 
 		sb.append("{" + "\"srv_id\":\"" +srv.getSrv_id() + "\", \"srv_nm\":\"" +srv.getSrv_nm() + "\", \"srv_desc\":\"" +srv.getSrv_desc() + "\", \"srv_tp\":\"" +srv.getSrv_tp() + "\" } "); 
 			 
