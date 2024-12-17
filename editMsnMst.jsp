@@ -52,7 +52,7 @@
 			service.update(info); 
 		} else if( saveAction.equals("X") ) {
 			service.update(info); 
-			service.execute(info, false); 
+			service.execute(info, true); 
 		} else if( saveAction.equals("N") ) {
 			service.insert(info); 
 		}
