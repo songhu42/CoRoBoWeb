@@ -32,7 +32,7 @@
         <isNotEmpty property="WHERE_OPTION">
         $WHERE_OPTION$
         </isNotEmpty>
-        ORDER BY A.SORTS 
+        ORDER BY A.SRV_DETAIL 
         LIMIT #START_NO#, #PAGE_CNT#
     </select>
     
