@@ -55,7 +55,7 @@
 		Msn_mst info = mstService.select(msn_id);   
 		
 		System.out.println(" Mission Execute :" + msn_id ); 
-		mstService.execute(info, false); 
+		mstService.execute(info, true); 
 	}
 	
 	String whereOption = "WHERE 1=1 "; 
